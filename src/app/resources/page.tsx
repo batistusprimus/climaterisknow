@@ -4,10 +4,10 @@ import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Resources',
-  description: 'Weather risk assessment resources for Texas energy facilities - Coming Soon.',
+  description: 'Weather risk assessment resources for Texas business operations across all major sectors - Coming Soon.',
   openGraph: {
     title: 'Resources | Sentinel Shield',
-    description: 'Weather risk assessment resources for Texas energy operations.',
+    description: 'Weather risk assessment resources for Texas business operations across energy, logistics, manufacturing, agriculture, and construction.',
     url: `${SITE_CONFIG.url}/resources`,
   },
 };
@@ -23,7 +23,7 @@ export default function ResourcesPage() {
               Weather Risk Assessment Resources
             </h1>
             <p className="text-body-large text-primary-100 mb-8">
-              Comprehensive resources for Texas energy facility risk assessment - Coming Soon
+              Comprehensive resources for Texas multi-sector business risk assessment - Coming Soon
             </p>
           </div>
         </div>
@@ -45,9 +45,9 @@ export default function ResourcesPage() {
               </h2>
               
               <p className="text-body-large text-neutral-600 mb-8">
-                We're developing comprehensive resources to help Texas energy executives understand weather risk assessment methodologies, 
+                We're developing comprehensive resources to help Texas business executives across all major sectors understand weather risk assessment methodologies, 
                 historical impact analysis, and facility-specific evaluation criteria. All content will be based on verifiable data sources 
-                and established meteorological practices.
+                and established meteorological practices for energy, logistics, manufacturing, agriculture, and construction operations.
               </p>
 
               <div className="bg-background rounded-xl p-6 mb-8">
@@ -73,7 +73,7 @@ export default function ResourcesPage() {
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-body-regular text-neutral-600">Energy facility vulnerability checklists</span>
+                    <span className="text-body-regular text-neutral-600">Multi-sector facility vulnerability checklists</span>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>

@@ -3,9 +3,9 @@ import { NavigationItem, CompanyInfo } from '@/types';
 // Company information
 export const COMPANY_INFO: CompanyInfo = {
   name: 'Sentinel Shield',
-  tagline: 'Weather risk assessment for Texas energy operations using historical data analysis and geographic factors.',
-  description: 'Sentinel Shield provides weather risk assessments for Texas energy facilities including downstream and petrochemical operations. Our analysis combines NOAA historical data, FEMA flood mapping, and facility-specific factors to evaluate location-based weather exposure.',
-  mission: 'To provide fact-based weather risk assessments that help Texas energy operations understand their exposure to extreme weather events.',
+  tagline: 'Weather risk intelligence for Texas business operations across energy, logistics, manufacturing, agriculture, and construction sectors.',
+  description: 'Sentinel Shield provides weather risk assessments for Texas businesses across all major sectors. Our analysis combines NOAA historical data, FEMA flood mapping, and facility-specific factors to evaluate location-based weather exposure for energy, logistics, manufacturing, agriculture, and construction operations.',
+  mission: 'To provide fact-based weather risk assessments that help Texas business operations understand their exposure to extreme weather events across all major industry sectors.',
   vision: 'Supporting informed risk management decisions through comprehensive weather data analysis and historical pattern recognition.',
   values: [
     'Data Accuracy',

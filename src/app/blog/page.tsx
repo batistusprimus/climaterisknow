@@ -5,10 +5,10 @@ import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Weather risk analysis insights for Texas energy operations - Coming Soon.',
+  description: 'Weather risk analysis insights for Texas business operations across all major sectors - Coming Soon.',
   openGraph: {
     title: 'Blog | Sentinel Shield',
-    description: 'Weather risk analysis insights for Texas energy operations.',
+    description: 'Weather risk analysis insights for Texas business operations across energy, logistics, manufacturing, agriculture, and construction.',
     url: `${SITE_CONFIG.url}/blog`,
   },
 };
@@ -24,7 +24,7 @@ export default function BlogPage() {
               Weather Risk Analysis
             </h1>
             <p className="text-body-large text-primary-100 mb-8">
-              Insights and analysis for Texas energy operations - Coming Soon
+              Insights and analysis for Texas multi-sector business operations - Coming Soon
             </p>
           </div>
         </div>
@@ -46,9 +46,9 @@ export default function BlogPage() {
               </h2>
               
               <p className="text-body-large text-neutral-600 mb-8">
-                We're preparing comprehensive weather risk analysis and insights specifically for Texas energy operations. 
+                We're preparing comprehensive weather risk analysis and insights specifically for Texas business operations across all major sectors. 
                 This section will feature data-driven articles on historical weather patterns, facility risk assessment methodologies, 
-                and operational impact analysis.
+                and operational impact analysis for energy, logistics, manufacturing, agriculture, and construction operations.
               </p>
 
               <div className="bg-background rounded-xl p-6 mb-8">

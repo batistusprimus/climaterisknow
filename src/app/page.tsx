@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import { 
@@ -57,6 +58,16 @@ export default function HomePage() {
             </div>
             <div className="animate-fade-in">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div className="mb-4 relative h-48 w-full rounded-lg overflow-hidden">
+                  <Image
+                    src="/G07MILfgCB38Os0v97oVf.png"
+                    alt="Dashboard d'analyse météorologique du Texas avec système de surveillance des risques climatiques"
+                    fill
+                    className="object-cover opacity-90"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+                </div>
                 <h3 className="text-h3 font-semibold mb-6 font-secondary">
                   Risk Assessment Components
                 </h3>
@@ -149,6 +160,15 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="card hover:shadow-card-hover animate-slide-up">
+              <div className="mb-4 relative h-48 w-full rounded-lg overflow-hidden">
+                <Image
+                  src="/A_aR37AW18v8XbBMIlNI-.png"
+                  alt="Vue aérienne du corridor énergétique de Houston avec installations pétrolières et raffineries"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/30 to-transparent"></div>
+              </div>
               <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                 Gulf Coast Region
               </h3>
@@ -163,6 +183,18 @@ export default function HomePage() {
             </div>
             
             <div className="card hover:shadow-card-hover animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              <div className="mb-4 relative h-48 w-full rounded-lg overflow-hidden">
+                <Image
+                  src="/wpKxAP_VI7C65PQLbd12J.png"
+                  alt="Dégâts d'inondation affectant les opérations logistiques dans le North Texas pendant Winter Storm Uri"
+                  fill
+                  className="object-cover brightness-110 contrast-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-neutral-700">
+                  Winter Storm Uri Impact
+                </div>
+              </div>
               <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                 North Texas Region
               </h3>
@@ -177,6 +209,18 @@ export default function HomePage() {
             </div>
             
             <div className="card hover:shadow-card-hover animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <div className="mb-4 relative h-48 w-full rounded-lg overflow-hidden">
+                <Image
+                  src="/G07MILfgCB38Os0v97oVf.png"
+                  alt="Analyse des risques climatiques pour l'agriculture et la technologie en Central Texas"
+                  fill
+                  className="object-cover brightness-105 hue-rotate-15"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-green-900/30 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-neutral-700">
+                  Agriculture & Tech
+                </div>
+              </div>
               <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                 Central Texas Region
               </h3>
@@ -355,6 +399,15 @@ export default function HomePage() {
                 <p className="text-body-regular text-neutral-600">
                   Total economic losses across Texas industries, demonstrating the scale of weather risk exposure
                 </p>
+                <div className="mt-4 relative h-32 w-full rounded-lg overflow-hidden">
+                  <Image
+                    src="/wpKxAP_VI7C65PQLbd12J.png"
+                    alt="Dégâts d'inondation dans un entrepôt après l'ouragan Harvey, montrant l'impact sur les opérations logistiques"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-alert/20 to-transparent"></div>
+                </div>
               </div>
               
               <div className="bg-primary/5 rounded-lg p-6">

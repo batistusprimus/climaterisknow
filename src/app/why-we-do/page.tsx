@@ -3,12 +3,12 @@ import Button from '@/components/ui/Button';
 import { CTA_BUTTONS, SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Texas Energy Weather Risk Analysis | Hurricane Harvey & Winter Storm Uri Impact',
-  description: 'Understanding weather risk for Texas energy facilities through historical events like Hurricane Harvey and Winter Storm Uri. Expert analysis of downstream operations, petrochemical facilities, and refinery weather exposure.',
-  keywords: ['Hurricane Harvey energy impact', 'Winter Storm Uri analysis', 'Texas energy weather history', 'downstream operations hurricane risk', 'petrochemical weather vulnerability', 'Texas refinery freeze protection'],
+  title: 'Texas Multi-Sector Weather Risk Analysis | Hurricane Harvey & Winter Storm Uri Impact',
+  description: 'Understanding weather risk for Texas business operations through historical events like Hurricane Harvey and Winter Storm Uri. Expert analysis across energy, logistics, manufacturing, agriculture, and construction sectors.',
+  keywords: ['Hurricane Harvey business impact', 'Winter Storm Uri analysis', 'Texas business weather history', 'multi-sector hurricane risk', 'business weather vulnerability', 'Texas operations weather protection'],
   openGraph: {
-    title: 'Texas Energy Weather Risk Analysis | Sentinel Shield',
-    description: 'Historical weather risk analysis for Texas energy operations including Harvey and Uri impact studies.',
+    title: 'Texas Multi-Sector Weather Risk Analysis | Sentinel Shield',
+    description: 'Historical weather risk analysis for Texas business operations across all major sectors including Harvey and Uri impact studies.',
     url: `${SITE_CONFIG.url}/why-we-do`,
   },
 };
@@ -21,11 +21,11 @@ export default function WhyWeDoPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-h1 font-bold text-white mb-6">
-              Texas Weather Events Impact Energy Operations. 
+              Texas Weather Events Impact Business Operations. 
               <span className="text-secondary block mt-2">We Provide Historical Data Analysis.</span>
             </h1>
             <p className="text-body-large text-primary-100">
-              Texas energy executives need comprehensive weather risk information. We provide historical data analysis and geographic factors to assess facility-specific exposure.
+              Texas business executives across all major sectors need comprehensive weather risk information. We provide historical data analysis and geographic factors to assess facility-specific exposure for energy, logistics, manufacturing, agriculture, and construction operations.
             </p>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function WhyWeDoPage() {
                     Insurance Market Exodus
                   </h3>
                   <p className="text-body-regular text-neutral-600">
-                    Major insurance companies are abandoning Texas, leaving energy facilities with limited coverage options and exponentially higher premiums.
+                    Major insurance companies are abandoning Texas, leaving business facilities across all sectors with limited coverage options and exponentially higher premiums.
                   </p>
                 </div>
 
@@ -60,7 +60,7 @@ export default function WhyWeDoPage() {
                     Operational Disruption Costs
                   </h3>
                   <p className="text-body-regular text-neutral-600">
-                    Energy facilities face average operational losses during weather events, with Gulf Coast petrochemical operations particularly vulnerable to storm surge and hurricane winds.
+                    Business facilities across all sectors face significant operational losses during weather events, with Gulf Coast energy operations, I-35/I-45 logistics corridors, DFW manufacturing, rural agriculture, and statewide construction particularly vulnerable to sector-specific weather risks.
                   </p>
                 </div>
 
@@ -69,7 +69,7 @@ export default function WhyWeDoPage() {
                     Preparation Challenges
                   </h3>
                   <p className="text-body-regular text-neutral-600">
-                    Energy facilities often lack comprehensive understanding of their location-specific weather risks, making it difficult to prepare adequately for extreme events.
+                    Business facilities across energy, logistics, manufacturing, agriculture, and construction sectors often lack comprehensive understanding of their location-specific weather risks, making it difficult to prepare adequately for extreme events.
                   </p>
                 </div>
               </div>
@@ -112,10 +112,10 @@ export default function WhyWeDoPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-h2 font-bold text-neutral-800 mb-4">
-                Why We Built This for Texas Energy
+                Why We Built This for Texas Multi-Sector Operations
               </h2>
               <p className="text-body-large text-neutral-600">
-                Hurricane Harvey revealed a fundamental gap: Texas energy operations needed comprehensive risk assessment, not generic weather warnings.
+                Hurricane Harvey revealed a fundamental gap: Texas business operations across all major sectors needed comprehensive risk assessment, not generic weather warnings.
               </p>
             </div>
 
@@ -129,16 +129,16 @@ export default function WhyWeDoPage() {
                     Hurricane Harvey Changed Everything
                   </h3>
                   <p className="text-body-large text-neutral-600 mb-6">
-                    Harvey caused $125 billion in Texas damages and took 23% of US refining capacity offline. Energy facilities with better risk understanding were able to prepare more effectively.
+                    Harvey caused $125 billion in Texas damages across all sectors and took 23% of US refining capacity offline. Business facilities with better risk understanding were able to prepare more effectively.
                   </p>
                   <p className="text-body-regular text-neutral-600">
-                    We realized that comprehensive weather risk assessment should be accessible to all Texas energy operations, not just the largest corporations with internal meteorology teams.
+                    We realized that comprehensive weather risk assessment should be accessible to all Texas business operations - energy, logistics, manufacturing, agriculture, and construction - not just the largest corporations with internal meteorology teams.
                   </p>
                 </div>
                 <div className="animate-fade-in">
                   <div className="bg-white rounded-2xl p-8 shadow-card">
                     <h4 className="text-h3 font-semibold text-neutral-800 mb-4 font-secondary">
-                      Harvey's Lesson for Texas Energy
+                      Harvey's Lesson for Texas Business Operations
                     </h4>
                     <div className="space-y-4">
                       <div className="border-l-4 border-alert pl-4">
@@ -207,10 +207,10 @@ export default function WhyWeDoPage() {
                     Informed Risk Management
                   </h3>
                   <p className="text-body-large text-neutral-600 mb-6">
-                    Energy facilities with comprehensive weather risk understanding can make better-informed decisions about emergency planning and operational preparation.
+                    Business facilities across all major sectors with comprehensive weather risk understanding can make better-informed decisions about emergency planning and operational preparation.
                   </p>
                   <p className="text-body-regular text-neutral-600">
-                    Weather risk assessment provides valuable information for internal risk management processes, helping energy executives understand their facility's specific exposure to extreme weather events.
+                    Weather risk assessment provides valuable information for internal risk management processes, helping business executives understand their facility's specific exposure to extreme weather events across energy, logistics, manufacturing, agriculture, and construction operations.
                   </p>
                 </div>
                 <div className="animate-fade-in">
@@ -257,7 +257,7 @@ export default function WhyWeDoPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-h2 font-bold text-neutral-800 mb-6">
-              Our Commitment to Texas Energy Operations
+              Our Commitment to Texas Multi-Sector Operations
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               <div className="animate-slide-up">
@@ -289,20 +289,20 @@ export default function WhyWeDoPage() {
                   <span className="text-success text-2xl font-bold">T</span>
                 </div>
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
-                  Texas Energy Focus
+                  Texas Multi-Sector Focus
                 </h3>
                 <p className="text-body-regular text-neutral-600">
-                  Built specifically for Texas Gulf Coast operations with deep understanding of energy infrastructure vulnerabilities.
+                  Built specifically for diversified Texas operations with deep understanding of vulnerabilities across energy, logistics, agriculture, manufacturing, and construction sectors.
                 </p>
               </div>
             </div>
 
             <div className="bg-primary/5 rounded-2xl p-8">
               <h3 className="text-h3 font-semibold text-neutral-800 mb-4 font-secondary">
-                Our Commitment to Texas Energy
+                Our Commitment to Texas Business Operations
               </h3>
               <p className="text-body-large text-neutral-600">
-                Comprehensive weather risk assessment should be accessible to all Texas energy facilities. We provide detailed analysis using verified data sources and transparent methodology for informed decision-making.
+                Comprehensive weather risk assessment should be accessible to all Texas business operations - energy & petrochemical, logistics & warehousing, manufacturing, agriculture & food processing, and construction & real estate development. We provide detailed analysis using verified data sources and transparent methodology for informed decision-making.
               </p>
             </div>
           </div>
@@ -314,10 +314,10 @@ export default function WhyWeDoPage() {
         <div className="container-custom">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-h2 font-bold text-white mb-4">
-              Request Weather Risk Assessment for Your Facility
+              Request Weather Risk Assessment for Your Business Operations
             </h2>
             <p className="text-body-large text-primary-100 mb-8">
-              Understand your facility's weather exposure through comprehensive historical data analysis and geographic risk assessment.
+              Understand your facility's weather exposure through comprehensive historical data analysis and geographic risk assessment across all major Texas business sectors.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button

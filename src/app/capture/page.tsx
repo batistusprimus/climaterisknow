@@ -195,11 +195,14 @@ export default function CapturePage() {
                   Energy & Petrochemical
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Protect Throughput Revenue:</strong> Schedule turnarounds outside hurricane season, winterize equipment before freeze events
+                  <strong>Protéger les revenus de production :</strong> Planifier les arrêts hors saison des ouragans, hiverner les équipements avant les événements de gel
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  Harvey awareness = higher budgets for risk mitigation investments
+                  <em>Houston Gulf Coast - Exposition la plus élevée aux ouragans + Impact financier massif</em>
                 </p>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Raffinerie avec protection contre les ouragans]</p>
+                </div>
               </div>
               
               <div className="bg-secondary/5 rounded-lg p-6">
@@ -207,48 +210,62 @@ export default function CapturePage() {
                   Logistics & Warehousing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Maintain Service Levels:</strong> Pre-position inventory before storms, reroute shipments around weather events
+                  <strong>Protéger la chaîne d'approvisionnement :</strong> Anticiper les retards de transport, sécuriser les stocks critiques avant les événements météo
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  Uri showed which companies kept supply chains running vs. those that failed
+                  <em>Corridors I-35/I-45 - Vulnérabilités de la chaîne d'approvisionnement critique</em>
                 </p>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Centre de distribution pendant Winter Storm Uri]</p>
+                </div>
               </div>
-              
-              <div className="bg-primary/5 rounded-lg p-6">
+
+              <div className="bg-success/5 rounded-lg p-6">
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                   Manufacturing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Protect Production Schedules:</strong> Plan maintenance during heat waves, secure alternative suppliers before freeze events
+                  <strong>Maintenir la production :</strong> Adapter les horaires aux risques de tempêtes, protéger les équipements sensibles
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  Just-in-time operations = weather preparation is revenue protection
+                  <em>Dallas-Fort Worth, Austin - Risques météo diversifiés + Production just-in-time</em>
                 </p>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Usine de fabrication tech avec protection contre grêle]</p>
+                </div>
               </div>
-              
-              <div className="bg-secondary/5 rounded-lg p-6">
+
+              <div className="bg-alert/5 rounded-lg p-6">
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                   Agriculture & Food Processing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Maximize Crop Revenue:</strong> Time planting around drought patterns, protect equipment before freeze events
+                  <strong>Protéger les revenus saisonniers :</strong> Planifier les récoltes selon les cycles de sécheresse, protéger contre le gel
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  Seasonal patterns create narrow windows for optimal decisions
+                  <em>Texas Rural - Exposition sécheresse + gel, sophistication numérique plus faible</em>
                 </p>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Exploitation agricole avec système d'irrigation]</p>
+                </div>
               </div>
-              
-              <div className="bg-primary/5 rounded-lg p-6">
+
+              <div className="bg-primary/10 rounded-lg p-6">
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
                   Construction & Real Estate
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Hit Project Deadlines:</strong> Schedule concrete pours outside heat waves, finish roofing before storm season
+                  <strong>Éviter les retards coûteux :</strong> Planifier les projets hors périodes à risque, protéger les matériaux
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  Weather delays = penalty costs, lost revenue, and reputation damage
+                  <em>Statewide - Retards météo = impact direct sur les revenus, évaluation de risques par projet</em>
                 </p>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Chantier de construction avec protection météo]</p>
+                </div>
               </div>
+              
+
               
               <div className="bg-neutral-50 rounded-lg p-6 flex items-center justify-center">
                 <div className="text-center">

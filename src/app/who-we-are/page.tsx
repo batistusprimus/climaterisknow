@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import { COMPANY_INFO, CTA_BUTTONS, SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Texas Energy Weather Risk Assessment Experts | Sentinel Shield',
-  description: 'Expert weather risk assessment for Texas energy facilities. NOAA historical data analysis, FEMA flood mapping, and facility-specific evaluation for downstream and petrochemical operations.',
-  keywords: ['Texas energy weather experts', 'NOAA data analysis specialists', 'energy facility risk assessment', 'downstream operations weather risk', 'petrochemical facility analysis', 'Texas energy meteorological assessment'],
+  title: 'Multi-Sector Weather Risk Assessment Experts for Texas | Sentinel Shield',
+  description: 'Expert weather risk assessment for Texas businesses across all sectors. NOAA historical data analysis, FEMA flood mapping, and facility-specific evaluation for energy, logistics, manufacturing, agriculture, and construction operations.',
+  keywords: ['Texas business weather experts', 'multi-sector risk assessment', 'NOAA data analysis specialists', 'facility risk evaluation', 'business weather exposure', 'comprehensive meteorological assessment', 'Texas industry weather risk'],
   openGraph: {
-    title: 'Weather Risk Assessment Experts | Sentinel Shield',
-    description: 'Expert weather risk assessment for Texas energy facilities using verified data sources.',
+    title: 'Multi-Sector Weather Risk Assessment Experts | Sentinel Shield',
+    description: 'Expert weather risk assessment for Texas businesses across all major industry sectors using verified data sources.',
     url: `${SITE_CONFIG.url}/who-we-are`,
   },
 };
@@ -17,11 +18,23 @@ export default function WhoWeArePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
-        <div className="container-custom">
+      <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/NOGRGPWN15kMKqHW5XL0f.png"
+            alt="Texas multi-sector operations including renewable energy and industrial infrastructure"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/70 to-primary-700/80"></div>
+        </div>
+        
+        <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-h1 font-bold text-white mb-6">
-              Built for Texas Business Operations
+              Built for Texas Multi-Sector Business Operations
             </h1>
             <p className="text-body-large text-primary-100">
               {COMPANY_INFO.description}
@@ -46,7 +59,7 @@ export default function WhoWeArePage() {
                   {COMPANY_INFO.mission}
                 </p>
                 <p className="text-body-regular text-neutral-600">
-                  Weather patterns can be analyzed through historical data. We combine NOAA weather records, FEMA flood mapping, and facility-specific factors to assess location-based weather exposure for Texas energy operations.
+                  Weather patterns can be analyzed through historical data. We combine NOAA weather records, FEMA flood mapping, and facility-specific factors to assess location-based weather exposure for Texas business operations across energy, logistics, manufacturing, agriculture, and construction sectors.
                 </p>
               </div>
             </div>
@@ -63,7 +76,7 @@ export default function WhoWeArePage() {
                   {COMPANY_INFO.vision}
                 </p>
                 <p className="text-body-regular text-neutral-600">
-                  Texas energy executives need clear information about weather exposure at their facilities. We provide comprehensive analysis using verified data sources to support informed risk management decisions.
+                  Texas business executives across all major sectors need clear information about weather exposure at their facilities. We provide comprehensive analysis using verified data sources to support informed risk management decisions for energy, logistics, manufacturing, agriculture, and construction operations.
                 </p>
               </div>
             </div>
@@ -117,7 +130,7 @@ export default function WhoWeArePage() {
               Our Analytical Approach
             </h2>
             <p className="text-body-large text-neutral-600 max-w-3xl mx-auto">
-              We combine meteorological expertise with data analysis to provide comprehensive weather risk assessments for Texas energy facilities.
+              We combine meteorological expertise with data analysis to provide comprehensive weather risk assessments for Texas business facilities across energy, logistics, manufacturing, agriculture, and construction sectors.
             </p>
           </div>
 
@@ -151,11 +164,23 @@ export default function WhoWeArePage() {
                 <span className="text-success text-2xl font-bold">E</span>
               </div>
               <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
-                Energy Sector Focus
+                Multi-Sector Focus
               </h3>
               <p className="text-body-regular text-neutral-600">
-                Specialized understanding of downstream operations, petrochemical facilities, and energy infrastructure requirements.
+                Specialized understanding of energy, logistics, manufacturing, agriculture, and construction operations with their specific infrastructure requirements and weather vulnerabilities.
               </p>
+              <div className="mt-4 relative h-48 w-full rounded-lg overflow-hidden">
+                <Image
+                  src="/NOGRGPWN15kMKqHW5XL0f.png"
+                  alt="Vue d'ensemble des opérations multi-sectorielles au Texas : énergie renouvelable, installations industrielles et agriculture"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/30 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded text-xs font-medium text-neutral-700">
+                  Multi-Sector Texas Operations
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -166,10 +191,10 @@ export default function WhoWeArePage() {
         <div className="container-custom">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-h2 font-bold text-white mb-4">
-              Request Weather Risk Assessment for Your Facility
+              Request Weather Risk Assessment for Your Business Operations
             </h2>
             <p className="text-body-large text-primary-100 mb-8">
-              Understand your facility's weather exposure through comprehensive historical data analysis and geographic risk factors.
+              Understand your facility's weather exposure through comprehensive historical data analysis and geographic risk factors across all major Texas business sectors.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
