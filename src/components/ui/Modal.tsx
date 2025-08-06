@@ -41,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const modalContent = (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black bg-opacity-50 transition-opacity animate-fade-in"
@@ -52,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({
       {/* Modal */}
       <div
         className={cn(
-          'relative bg-white rounded-lg shadow-xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-slide-up',
+          'relative bg-white rounded-lg shadow-xl w-full mx-4 max-h-[90vh] max-w-full overflow-y-auto animate-slide-up',
           sizeClasses[size]
         )}
         role="dialog"

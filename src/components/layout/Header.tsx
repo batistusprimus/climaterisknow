@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full",
       isScrolled 
         ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-200" 
         : "bg-white/90 backdrop-blur-sm"
@@ -130,7 +130,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-200 bg-white/95 backdrop-blur-md">
+          <div className="lg:hidden border-t border-neutral-200 bg-white/95 backdrop-blur-md w-full">
             <nav className="py-4 space-y-2">
               {MAIN_NAVIGATION.map((item) => (
                 <Link

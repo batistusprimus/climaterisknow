@@ -195,13 +195,13 @@ export default function CapturePage() {
                   Energy & Petrochemical
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Protéger les revenus de production :</strong> Planifier les arrêts hors saison des ouragans, hiverner les équipements avant les événements de gel
+                  <strong>Protect Production Revenue:</strong> Schedule shutdowns outside hurricane season, winterize equipment before freeze events
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  <em>Houston Gulf Coast - Exposition la plus élevée aux ouragans + Impact financier massif</em>
+                  <em>Houston Gulf Coast - Highest hurricane exposure + Massive financial impact</em>
                 </p>
                 <div className="mt-3 p-3 bg-white rounded">
-                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Raffinerie avec protection contre les ouragans]</p>
+                  <p className="text-xs text-neutral-500">[📸 Image placeholder: Refinery with hurricane protection]</p>
                 </div>
               </div>
               
@@ -210,13 +210,13 @@ export default function CapturePage() {
                   Logistics & Warehousing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Protéger la chaîne d'approvisionnement :</strong> Anticiper les retards de transport, sécuriser les stocks critiques avant les événements météo
+                  <strong>Protect Supply Chain:</strong> Anticipate transport delays, secure critical inventory before weather events
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  <em>Corridors I-35/I-45 - Vulnérabilités de la chaîne d'approvisionnement critique</em>
+                  <em>I-35/I-45 Corridors - Critical supply chain vulnerabilities</em>
                 </p>
                 <div className="mt-3 p-3 bg-white rounded">
-                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Centre de distribution pendant Winter Storm Uri]</p>
+                  <p className="text-xs text-neutral-500">[📸 Image placeholder: Distribution center during Winter Storm Uri]</p>
                 </div>
               </div>
 
@@ -225,13 +225,13 @@ export default function CapturePage() {
                   Manufacturing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Maintenir la production :</strong> Adapter les horaires aux risques de tempêtes, protéger les équipements sensibles
+                  <strong>Maintain Production:</strong> Adapt schedules to storm risks, protect sensitive equipment
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  <em>Dallas-Fort Worth, Austin - Risques météo diversifiés + Production just-in-time</em>
+                  <em>Dallas-Fort Worth, Austin - Diverse weather risks + Just-in-time production</em>
                 </p>
                 <div className="mt-3 p-3 bg-white rounded">
-                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Usine de fabrication tech avec protection contre grêle]</p>
+                  <p className="text-xs text-neutral-500">[📸 Image placeholder: Tech manufacturing plant with hail protection]</p>
                 </div>
               </div>
 
@@ -240,13 +240,13 @@ export default function CapturePage() {
                   Agriculture & Food Processing
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Protéger les revenus saisonniers :</strong> Planifier les récoltes selon les cycles de sécheresse, protéger contre le gel
+                  <strong>Protect Seasonal Revenue:</strong> Plan harvests around drought cycles, protect against freeze events
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  <em>Texas Rural - Exposition sécheresse + gel, sophistication numérique plus faible</em>
+                  <em>Texas Rural - Drought + freeze exposure, lower digital sophistication</em>
                 </p>
                 <div className="mt-3 p-3 bg-white rounded">
-                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Exploitation agricole avec système d'irrigation]</p>
+                  <p className="text-xs text-neutral-500">[📸 Image placeholder: Agricultural operation with irrigation system]</p>
                 </div>
               </div>
 
@@ -255,13 +255,13 @@ export default function CapturePage() {
                   Construction & Real Estate
                 </h3>
                 <p className="text-body-regular text-neutral-600 mb-3">
-                  <strong>Éviter les retards coûteux :</strong> Planifier les projets hors périodes à risque, protéger les matériaux
+                  <strong>Avoid Costly Delays:</strong> Schedule projects outside high-risk periods, protect materials
                 </p>
                 <p className="text-body-small text-neutral-500">
-                  <em>Statewide - Retards météo = impact direct sur les revenus, évaluation de risques par projet</em>
+                  <em>Statewide - Weather delays = direct revenue impact, project-based risk assessment</em>
                 </p>
                 <div className="mt-3 p-3 bg-white rounded">
-                  <p className="text-xs text-neutral-500">[📸 Emplacement image: Chantier de construction avec protection météo]</p>
+                  <p className="text-xs text-neutral-500">[📸 Image placeholder: Construction site with weather protection]</p>
                 </div>
               </div>
               
@@ -414,17 +414,211 @@ export default function CapturePage() {
                     </div>
                   </div>
                   
-                  {/* 
-                    TALLY FORM EMBED GOES HERE 
-                    Replace this comment with the Tally embed code
-                  */}
-                  <div className="min-h-[600px] bg-neutral-50 rounded-lg flex items-center justify-center border-2 border-dashed border-neutral-300">
-                    <div className="text-center text-neutral-500">
-                      <div className="text-4xl mb-4">📋</div>
-                      <div className="text-lg font-semibold mb-2">Tally Form Embed</div>
-                      <div className="text-sm">Replace this placeholder with your Tally embed code</div>
+                  {/* Weather Risk Assessment Form */}
+                  <form className="space-y-6">
+                    {/* Business Information */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-neutral-800">Business Information</h4>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">
+                            Company Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            required
+                            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                            placeholder="Your Company Name"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="industry" className="block text-sm font-medium text-neutral-700 mb-2">
+                            Industry Sector *
+                          </label>
+                          <select
+                            id="industry"
+                            name="industry"
+                            required
+                            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                          >
+                            <option value="">Select Industry</option>
+                            <option value="energy">Energy & Petrochemical</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="logistics">Logistics & Warehousing</option>
+                            <option value="agriculture">Agriculture & Food Processing</option>
+                            <option value="construction">Construction & Real Estate</option>
+                            <option value="technology">Technology</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+
+                    {/* Contact Information */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-neutral-800">Contact Information</h4>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="first-name" className="block text-sm font-medium text-neutral-700 mb-2">
+                            First Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="first-name"
+                            name="first-name"
+                            required
+                            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                            placeholder="John"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="last-name" className="block text-sm font-medium text-neutral-700 mb-2">
+                            Last Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="last-name"
+                            name="last-name"
+                            required
+                            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                            placeholder="Smith"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
+                          Business Email *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                          placeholder="john.smith@company.com"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Facility Location */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-neutral-800">Facility Location</h4>
+                      
+                      <div>
+                        <label htmlFor="address" className="block text-sm font-medium text-neutral-700 mb-2">
+                          Facility Address *
+                        </label>
+                        <input
+                          type="text"
+                          id="address"
+                          name="address"
+                          required
+                          className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                          placeholder="Street Address, City, State"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Weather Concerns */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-neutral-800">Weather Risk Priorities</h4>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-neutral-700 mb-3">
+                          Primary weather concerns (select all that apply):
+                        </label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {[
+                            'Hurricanes and tropical storms',
+                            'Flooding and storm surge',
+                            'Extreme heat events',
+                            'Winter storms and freeze events',
+                            'Tornadoes and severe weather',
+                            'Drought conditions'
+                          ].map((event) => (
+                            <label key={event} className="flex items-center">
+                              <input
+                                type="checkbox"
+                                name="weather-concerns"
+                                value={event.toLowerCase().replace(/\s+/g, '-')}
+                                className="h-4 w-4 text-primary focus:ring-primary border-neutral-300 rounded"
+                              />
+                              <span className="ml-2 text-sm text-neutral-700">{event}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="urgency" className="block text-sm font-medium text-neutral-700 mb-2">
+                          Assessment Timeline *
+                        </label>
+                        <select
+                          id="urgency"
+                          name="urgency"
+                          required
+                          className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                        >
+                          <option value="">Select Timeline</option>
+                          <option value="immediate">Immediate (Active weather threat)</option>
+                          <option value="1-week">Within 1 week</option>
+                          <option value="2-4-weeks">2-4 weeks</option>
+                          <option value="1-3-months">1-3 months</option>
+                          <option value="planning">General planning purposes</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Additional Information */}
+                    <div>
+                      <label htmlFor="specific-concerns" className="block text-sm font-medium text-neutral-700 mb-2">
+                        Additional Details
+                      </label>
+                      <textarea
+                        id="specific-concerns"
+                        name="specific-concerns"
+                        rows={3}
+                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                        placeholder="Describe specific weather concerns, recent events, or particular areas you'd like addressed..."
+                      ></textarea>
+                    </div>
+
+                    {/* Consent */}
+                    <div className="space-y-3">
+                      <label className="flex items-start">
+                        <input
+                          type="checkbox"
+                          name="consent"
+                          required
+                          className="h-4 w-4 text-primary focus:ring-primary border-neutral-300 rounded mt-0.5"
+                        />
+                        <span className="ml-2 text-sm text-neutral-700">
+                          I consent to being contacted by Sentinel Shield regarding this weather risk assessment request. *
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="pt-4">
+                      <button
+                        type="submit"
+                        className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
+                      >
+                        Request Weather Risk Assessment
+                      </button>
+                      
+                      <p className="text-xs text-neutral-500 text-center mt-3">
+                        Assessment requests are reviewed within 24 hours. Priority response during active weather events.
+                      </p>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

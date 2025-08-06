@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-neutral-800 text-white">
+    <footer className="bg-neutral-800 text-white w-full">
 
       {/* Main Footer Content */}
       <div className="container-custom py-16">

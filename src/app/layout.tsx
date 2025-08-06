@@ -88,12 +88,12 @@ export default function RootLayout({
   return (
     <html lang={SITE_CONFIG.language} className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} antialiased no-scroll-x`}
         suppressHydrationWarning
       >
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col safe-area">
           <Header />
-          <main className="flex-1 pt-20">
+          <main className="flex-1 pt-20 safe-area">
             {children}
           </main>
           <Footer />
