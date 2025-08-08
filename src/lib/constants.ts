@@ -40,6 +40,8 @@ export const FOOTER_NAVIGATION = {
     { label: 'Privacy Policy', href: '/legal/privacy' },
     { label: 'Terms of Service', href: '/legal/terms' },
     { label: 'Cookie Policy', href: '/legal/cookies' },
+    { label: 'Disclaimer', href: '/legal/disclaimer' },
+    { label: 'Legal Information', href: '/legal/legal-information' },
   ],
 };
 
