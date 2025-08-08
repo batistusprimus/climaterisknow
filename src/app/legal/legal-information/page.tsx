@@ -63,8 +63,8 @@ export default function LegalInformationPage() {
                 </p>
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 mt-6">Hosting Information</h3>
                 <p className="text-body-regular text-neutral-600">
-                  <strong>Website hosted by:</strong> [Hosting Provider Name]<br />
-                  <strong>Server Location:</strong> [Server Location]
+                  <strong>Website hosted by:</strong> Vercel<br />
+                  <strong>Server Location:</strong> USA
                 </p>
               </div>
 
