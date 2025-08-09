@@ -74,7 +74,7 @@ export default async function BlogPage() {
 
       {/* Featured Articles */}
       <section className="section-padding">
-        <div className="container-custom">
+          <div className="container-custom">
           <div className="mb-16">
             <h2 className="text-h2 font-bold text-neutral-800 mb-4">Featured Articles</h2>
             <p className="text-body-large text-neutral-600 mb-12">

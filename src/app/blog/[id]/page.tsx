@@ -131,7 +131,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
               <div className="container-custom">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
                   <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
-                    <div className="prose prose-lg md:prose-xl prose-neutral max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow md:prose-h2:mt-10 md:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+                    <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
                       <div className="overflow-x-auto">
                         <div dangerouslySetInnerHTML={{ __html: html }} />
                       </div>
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
             <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
-              <div className="prose prose-lg md:prose-xl prose-neutral max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow md:prose-h2:mt-10 md:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+              <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
                 <div className="overflow-x-auto">
                   <div dangerouslySetInnerHTML={{ __html: html }} />
                 </div>
