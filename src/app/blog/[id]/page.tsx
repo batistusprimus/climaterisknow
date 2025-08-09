@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
               </div>
             </section>
             {item.image_url && (
-              <div className="container-custom -mt-10">
+              <div className="container-custom -mt-6 md:-mt-10 overflow-hidden">
                 <Image
                   src={item.image_url}
                   alt={item.title}
@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                   height={640}
                   unoptimized
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80"
+                  className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-56 sm:h-64 md:h-80"
                 />
               </div>
             )}
@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       </section>
       {/** Couverture statique si disponible */}
       {post.featuredImage && (
-        <div className="container-custom -mt-10">
+        <div className="container-custom -mt-6 md:-mt-10 overflow-hidden">
           <Image
             src={post.featuredImage}
             alt={post.title}
@@ -153,7 +153,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             height={640}
             unoptimized
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80"
+            className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-56 sm:h-64 md:h-80"
           />
         </div>
       )}
