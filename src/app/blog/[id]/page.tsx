@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   const post = BLOG_POSTS.find((p) => p.id === id);
   if (!post) return notFound();
   const formattedDate = new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const { html, toc } = buildTocAndInjectIds(post.content || '');
+  const html = post.content || '';
   return (
     <div className="min-h-screen bg-background">
       <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
