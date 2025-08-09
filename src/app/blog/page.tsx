@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
 import { BLOG_POSTS, FEATURED_POSTS, BLOG_CATEGORIES } from '@/lib/blog-data';
+import type { Article as OutrankArticle } from '@/lib/storage-upstash';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -14,7 +15,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  // Récupération des articles Outrank (publiés)
+  const base = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url;
+  let outrankItems: OutrankArticle[] = [];
+  try {
+    const res = await fetch(`${base}/api/blog/articles?source=outrank&status=published&limit=24`, { next: { revalidate: 60 } });
+    if (res.ok) {
+      const data = await res.json();
+      outrankItems = (data?.items || []) as OutrankArticle[];
+    }
+  } catch {
+    // ignore en cas d'erreur réseau
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -87,7 +101,42 @@ export default function BlogPage() {
             </div>
           </div>
 
-          {/* All Articles */}
+          {/* Outrank Articles (si disponibles) */}
+          {outrankItems.length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-h2 font-bold text-neutral-800 mb-12">Latest (Outrank)</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {outrankItems.map((post) => (
+                  <article key={post.slug} className="card hover:shadow-card-hover transition-all duration-200">
+                    <div className="flex items-start justify-between mb-3">
+                      <span className="inline-block px-2 py-1 bg-secondary/10 text-secondary text-xs font-medium rounded">
+                        {post.tags?.[0] || 'Report'}
+                      </span>
+                      <span className="text-xs text-neutral-500">
+                        {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      </span>
+                    </div>
+                    <h3 className="text-body-large font-semibold text-neutral-800 mb-2 leading-tight">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
+                        {post.title}
+                      </Link>
+                    </h3>
+                    <p className="text-body-small text-neutral-600 mb-4 line-clamp-3">
+                      {post.meta_description || post.excerpt || ''}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-neutral-500">Published</span>
+                      <Link href={`/blog/${post.slug}`} className="text-primary font-medium hover:text-primary-700 transition-colors text-xs">
+                        Read →
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* All Articles (statiques) */}
           <div className="mb-16">
             <h2 className="text-h2 font-bold text-neutral-800 mb-12">All Articles</h2>
             
