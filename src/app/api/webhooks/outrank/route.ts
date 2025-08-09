@@ -78,16 +78,18 @@ export async function POST(req: NextRequest) {
         status: 'published',
         source: 'outrank',
       });
-    } catch (e: any) {
-      errors.push({ id: art?.id, error: e?.message || 'mapping error' });
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : 'mapping error';
+      errors.push({ id: art?.id, error: message });
     }
   }
 
   try {
     const res = await upsertArticles(toStore);
     return NextResponse.json({ saved: res.saved, errors });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message || 'storage error' }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'storage error';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
