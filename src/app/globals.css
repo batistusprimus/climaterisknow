@@ -44,6 +44,35 @@ body {
   padding: 0;
 }
 
+/* Prose (typography) tuning for better fluidity */
+.prose {
+  max-width: none;
+}
+.prose h2, .prose h3 {
+  scroll-margin-top: 6rem;
+}
+.prose h2 { /* clearer rhythm for sections */
+  margin-top: 2.5rem;
+}
+.prose h3 {
+  margin-top: 2rem;
+}
+.prose table {
+  display: block; /* enables horizontal scroll on small screens */
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+.prose th, .prose td {
+  border: 1px solid #E2E8F0; /* neutral-200 */
+  padding: 0.75rem 1rem;
+}
+.prose thead th {
+  background-color: #F8FAFC; /* neutral-50 */
+  font-weight: 600;
+}
+
 /* Typography classes */
 .text-display {
   font-size: clamp(2.5rem, 8vw, 4.5rem);

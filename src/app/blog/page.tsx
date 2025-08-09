@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  // Récupération des articles Outrank (publiés)
+  // Récupération des articles dynamiques (publiés)
   const base = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url;
   let outrankItems: OutrankArticle[] = [];
   try {
@@ -28,6 +28,32 @@ export default async function BlogPage() {
   } catch {
     // ignore en cas d'erreur réseau
   }
+
+  // Fusionne les articles dynamiques et éditoriaux pour un listing fluide
+  const latestUnified = [
+    ...outrankItems.map((p) => ({
+      id: p.slug,
+      title: p.title,
+      excerpt: p.meta_description || p.excerpt || '',
+      date: new Date(p.created_at).toISOString(),
+      href: `/blog/${p.slug}`,
+      tag: p.tags?.[0] || 'Insight',
+      imageUrl: p.image_url || undefined,
+      source: 'dynamic' as const,
+    })),
+    ...BLOG_POSTS.map((p) => ({
+      id: p.id,
+      title: p.title,
+      excerpt: p.excerpt,
+      date: new Date(p.publishedAt).toISOString(),
+      href: `/blog/${p.id}`,
+      tag: p.category,
+      imageUrl: (p as any).featuredImage || undefined,
+      source: 'editorial' as const,
+    })),
+  ]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 18);
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,32 +127,42 @@ export default async function BlogPage() {
             </div>
           </div>
 
-          {/* Outrank Articles (si disponibles) */}
-          {outrankItems.length > 0 && (
+          {/* Latest Articles (fusion dynamique + éditorial) */}
+          {latestUnified.length > 0 && (
             <div className="mb-16">
-              <h2 className="text-h2 font-bold text-neutral-800 mb-12">Latest (Outrank)</h2>
+              <h2 className="text-h2 font-bold text-neutral-800 mb-4">Latest Articles</h2>
+              <p className="text-body-large text-neutral-600 mb-10">
+                Fresh analyses and reports across hurricanes, flooding, heat and supply chain resilience
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {outrankItems.map((post) => (
-                  <article key={post.slug} className="card hover:shadow-card-hover transition-all duration-200">
+                {latestUnified.map((post) => (
+                  <article key={post.id} className="card group h-full flex flex-col overflow-hidden">
+                    {post.imageUrl && (
+                      <Link href={post.href} className="block -mx-6 -mt-6 mb-4">
+                        <img src={post.imageUrl} alt={post.title} className="w-full h-44 object-cover md:h-48 lg:h-40" />
+                      </Link>
+                    )}
                     <div className="flex items-start justify-between mb-3">
                       <span className="inline-block px-2 py-1 bg-secondary/10 text-secondary text-xs font-medium rounded">
-                        {post.tags?.[0] || 'Report'}
+                        {post.tag}
                       </span>
                       <span className="text-xs text-neutral-500">
-                        {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                       </span>
                     </div>
                     <h3 className="text-body-large font-semibold text-neutral-800 mb-2 leading-tight">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
+                      <Link href={post.href} className="hover:text-primary transition-colors">
                         {post.title}
                       </Link>
                     </h3>
                     <p className="text-body-small text-neutral-600 mb-4 line-clamp-3">
-                      {post.meta_description || post.excerpt || ''}
+                      {post.excerpt}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-neutral-500">Published</span>
-                      <Link href={`/blog/${post.slug}`} className="text-primary font-medium hover:text-primary-700 transition-colors text-xs">
+                    <div className="mt-auto flex items-center justify-between">
+                      <span className="text-xs text-neutral-500">
+                        {post.source === 'editorial' ? 'Editorial' : 'Report'}
+                      </span>
+                      <Link href={post.href} className="text-primary font-medium group-hover:text-primary-700 transition-colors text-xs">
                         Read →
                       </Link>
                     </div>
@@ -135,51 +171,6 @@ export default async function BlogPage() {
               </div>
             </div>
           )}
-
-          {/* All Articles (statiques) */}
-          <div className="mb-16">
-            <h2 className="text-h2 font-bold text-neutral-800 mb-12">All Articles</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {BLOG_POSTS.map((post) => (
-                <article key={post.id} className="card hover:shadow-card-hover transition-all duration-200">
-                  <div className="flex items-start justify-between mb-3">
-                    <span className="inline-block px-2 py-1 bg-secondary/10 text-secondary text-xs font-medium rounded">
-                      {post.category}
-                    </span>
-                    <span className="text-xs text-neutral-500">
-                      {new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric' 
-                      })}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-body-large font-semibold text-neutral-800 mb-2 leading-tight">
-                    <Link href={`/blog/${post.id}`} className="hover:text-primary transition-colors">
-                      {post.title}
-                    </Link>
-                  </h3>
-                  
-                  <p className="text-body-small text-neutral-600 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-neutral-500">
-                      {post.readTime} min read
-                    </span>
-                    <Link 
-                      href={`/blog/${post.id}`}
-                      className="text-primary font-medium hover:text-primary-700 transition-colors text-xs"
-                    >
-                      Read →
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
 
           {/* Categories */}
           <div className="bg-white rounded-2xl p-8 shadow-card">

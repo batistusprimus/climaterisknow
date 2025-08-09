@@ -5,6 +5,35 @@ import { BLOG_POSTS } from '@/lib/blog-data';
 import { SITE_CONFIG } from '@/lib/constants';
 import type { Article as OutrankArticle } from '@/lib/storage-upstash';
 
+// Utilitaires: génère des ancres pour h2/h3 et construit un sommaire
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/&.+?;/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+function buildTocAndInjectIds(html: string): { html: string; toc: { id: string; text: string; level: 2 | 3 | 4 }[] } {
+  const ids = new Map<string, number>();
+  const toc: { id: string; text: string; level: 2 | 3 | 4 }[] = [];
+  const result = html.replace(/<h(2|3|4)([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, levelStr, attrs, inner) => {
+    const level = Number(levelStr) as 2 | 3 | 4;
+    const text = inner.replace(/<[^>]*>/g, '').trim();
+    let id = slugify(text || 'section');
+    const count = ids.get(id) || 0;
+    ids.set(id, count + 1);
+    if (count > 0) id = `${id}-${count + 1}`;
+    // Inject id uniquement s'il n'existe pas déjà
+    const hasId = /\sid=\"[^\"]+\"/i.test(attrs);
+    const newAttrs = hasId ? attrs : `${attrs} id="${id}"`;
+    toc.push({ id, text, level });
+    return `<h${level}${newAttrs}>${inner}</h${level}>`;
+  });
+  return { html: result, toc };
+}
+
 export async function generateStaticParams() {
   // on prérend les articles statiques; les Outrank seront render dynamiquement
   return BLOG_POSTS.map((post) => ({ id: post.id }));
@@ -65,11 +94,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       const item = (data?.items?.[0] ?? null) as OutrankArticle | null;
       if (item) {
         const formattedDate = new Date(item.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const { html, toc } = buildTocAndInjectIds(item.content_html || '');
         return (
           <div className="min-h-screen bg-background">
             <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
               <div className="container-custom">
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-4xl mx-auto">
                   <Link href="/blog" className="text-primary-100 hover:text-white text-body-small inline-flex items-center mb-6">← Retour au blog</Link>
                   <h1 className="text-h1 font-bold text-white mb-4">{item.title}</h1>
                   <div className="flex flex-wrap items-center gap-4 text-primary-100">
@@ -82,12 +112,51 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                 </div>
               </div>
             </section>
+            {item.image_url && (
+              <div className="container-custom -mt-10">
+                <img src={item.image_url} alt={item.title} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
+              </div>
+            )}
 
             <section className="section-padding">
               <div className="container-custom">
-                <article className="max-w-3xl mx-auto bg-white rounded-2xl shadow-card p-6 md:p-10">
-                  <div className="prose prose-neutral max-w-none prose-headings:text-neutral-900 prose-p:text-neutral-700 prose-li:text-neutral-700" dangerouslySetInnerHTML={{ __html: item.content_html || '' }} />
-                </article>
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
+                  <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
+                    <div className="prose prose-lg md:prose-xl prose-neutral max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow md:prose-h2:mt-10 md:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+                      <div className="overflow-x-auto">
+                        <div dangerouslySetInnerHTML={{ __html: html }} />
+                      </div>
+                    </div>
+                  </article>
+                  {toc.length > 3 && (
+                    <aside className="hidden lg:block sticky top-24 h-fit bg-white rounded-2xl shadow-card p-6">
+                      <h3 className="text-h3 font-semibold text-neutral-800 mb-4">Sommaire</h3>
+                      <nav>
+                        <ul className="space-y-2 text-sm">
+                          {toc.map((t) => (
+                            <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
+                              <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
+                                {t.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </nav>
+                      <details className="lg:hidden mt-4">
+                        <summary className="cursor-pointer text-neutral-700">Sommaire</summary>
+                        <ul className="mt-2 space-y-2 text-sm">
+                          {toc.map((t) => (
+                            <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
+                              <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
+                                {t.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    </aside>
+                  )}
+                </div>
               </div>
             </section>
           </div>
@@ -100,11 +169,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   const post = BLOG_POSTS.find((p) => p.id === id);
   if (!post) return notFound();
   const formattedDate = new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const { html, toc } = buildTocAndInjectIds(post.content || '');
   return (
     <div className="min-h-screen bg-background">
       <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
         <div className="container-custom">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <Link href="/blog" className="text-primary-100 hover:text-white text-body-small inline-flex items-center mb-6">← Retour au blog</Link>
             <h1 className="text-h1 font-bold text-white mb-4">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-4 text-primary-100">
@@ -116,11 +186,39 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
           </div>
         </div>
       </section>
+      {/** Couverture statique si disponible */}
+      {(post as any).featuredImage && (
+        <div className="container-custom -mt-10">
+          <img src={(post as any).featuredImage} alt={post.title} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
+        </div>
+      )}
       <section className="section-padding">
         <div className="container-custom">
-          <article className="max-w-3xl mx-auto bg-white rounded-2xl shadow-card p-6 md:p-10">
-            <div className="prose prose-neutral max-w-none prose-headings:text-neutral-900 prose-p:text-neutral-700 prose-li:text-neutral-700" dangerouslySetInnerHTML={{ __html: post.content }} />
-          </article>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
+            <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
+              <div className="prose prose-lg md:prose-xl prose-neutral max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow md:prose-h2:mt-10 md:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+                <div className="overflow-x-auto">
+                  <div dangerouslySetInnerHTML={{ __html: html }} />
+                </div>
+              </div>
+            </article>
+            {toc.length > 3 && (
+              <aside className="hidden lg:block sticky top-24 h-fit bg-white rounded-2xl shadow-card p-6">
+                <h3 className="text-h3 font-semibold text-neutral-800 mb-4">Sommaire</h3>
+                <nav>
+                  <ul className="space-y-2 text-sm">
+                    {toc.map((t) => (
+                      <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
+                        <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
+                          {t.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </aside>
+            )}
+          </div>
         </div>
       </section>
     </div>
