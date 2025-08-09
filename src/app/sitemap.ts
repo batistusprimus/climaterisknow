@@ -35,11 +35,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/legal/cookies',
     '/legal/disclaimer',
     '/legal/legal-information',
-  ].map((path) => ({ url: absoluteUrl(path), changefreq: 'weekly', priority: 0.7 as const }));
+  ].map((path) => ({ url: absoluteUrl(path), changefreq: 'weekly' as const, priority: 0.7 as const }));
 
-  const staticBlog = BLOG_POSTS.map((p) => ({ url: absoluteUrl(`/blog/${p.id}`), changefreq: 'weekly', priority: 0.8 as const }));
+  const staticBlog = BLOG_POSTS.map((p) => ({ url: absoluteUrl(`/blog/${p.id}`), changefreq: 'weekly' as const, priority: 0.8 as const }));
   const outrankSlugs = await fetchOutrankSlugs();
-  const outrankBlog = outrankSlugs.map((slug) => ({ url: absoluteUrl(`/blog/${slug}`), changefreq: 'weekly', priority: 0.8 as const }));
+  const outrankBlog = outrankSlugs.map((slug) => ({ url: absoluteUrl(`/blog/${slug}`), changefreq: 'weekly' as const, priority: 0.8 as const }));
 
   const dedup = new Map<string, { url: string; changefreq: 'weekly'; priority: number }>();
   for (const item of [...staticRoutes, ...staticBlog, ...outrankBlog]) {
