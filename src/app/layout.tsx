@@ -57,14 +57,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.png", sizes: "96x96", type: "image/png" }
+      { url: "/Logo_Sentinel_Climate_Intelligence.ico", type: "image/x-icon" },
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" }
     ],
-    shortcut: ["/favicon.png"],
-    apple: [
-      { url: "/favicon.png" }
-    ],
+    shortcut: ["/Logo_Sentinel_Climate_Intelligence.ico"],
+    apple: ["/favicon.png"],
   },
 
   robots: {
