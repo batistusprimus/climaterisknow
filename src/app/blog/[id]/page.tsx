@@ -4,18 +4,13 @@ import Link from 'next/link';
 import { BLOG_POSTS } from '@/lib/blog-data';
 import { SITE_CONFIG } from '@/lib/constants';
 
-type PageParams = {
-  params: {
-    id: string;
-  };
-};
-
 export async function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ id: post.id }));
 }
 
-export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
-  const post = BLOG_POSTS.find((p) => p.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const post = BLOG_POSTS.find((p) => p.id === id);
   if (!post) {
     return {
       title: 'Article non trouvé',
@@ -36,8 +31,9 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   };
 }
 
-export default function BlogPostPage({ params }: PageParams) {
-  const post = BLOG_POSTS.find((p) => p.id === params.id);
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = BLOG_POSTS.find((p) => p.id === id);
   if (!post) return notFound();
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString('en-US', {
