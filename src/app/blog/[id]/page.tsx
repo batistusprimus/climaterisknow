@@ -35,6 +35,20 @@ function buildTocAndInjectIds(html: string): { html: string; toc: { id: string; 
   return { html: result, toc };
 }
 
+// Nettoyages spécifiques au contenu dynamique Outrank
+function sanitizeContentHtml(rawHtml: string): string {
+  if (!rawHtml) return '';
+  let html = rawHtml;
+  // 1) Supprimer le tout premier H1 éventuel (pour éviter le doublon avec le hero)
+  html = html.replace(/^[\s\S]*?<h1[^>]*>[\s\S]*?<\/h1>/i, (match) => {
+    // si le tout premier tag est bien un h1, on le retire; sinon, on ne change rien
+    return match.startsWith('<h1') ? '' : match;
+  });
+  // 2) Retirer un bloc Sommaire intégré au HTML (h2/h3 "Sommaire" jusqu'au prochain h2/h3/h4)
+  html = html.replace(/<h(2|3)[^>]*>\s*Sommaire\s*<\/h\1>[\s\S]*?(?=<h(2|3|4)[^>]*>|$)/i, '');
+  return html;
+}
+
 export async function generateStaticParams() {
   // on prérend les articles statiques; les Outrank seront render dynamiquement
   return BLOG_POSTS.map((post) => ({ id: post.id }));
@@ -95,7 +109,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       const item = (data?.items?.[0] ?? null) as OutrankArticle | null;
       if (item) {
         const formattedDate = new Date(item.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        const { html, toc } = buildTocAndInjectIds(item.content_html || '');
+        const cleaned = sanitizeContentHtml(item.content_html || '');
+        const { html, toc } = buildTocAndInjectIds(cleaned);
         return (
           <div className="min-h-screen bg-background">
             <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
