@@ -181,22 +181,7 @@ export default async function BlogPage() {
             </div>
           )}
 
-          {/* Categories */}
-          <div className="bg-white rounded-2xl p-8 shadow-card">
-            <h3 className="text-h3 font-semibold text-neutral-800 mb-6 font-secondary">
-              Browse by Category
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {BLOG_CATEGORIES.map((category) => (
-                <span
-                  key={category}
-                  className="inline-block px-4 py-2 bg-primary/5 text-primary text-body-small font-medium rounded-lg hover:bg-primary/10 transition-colors cursor-pointer"
-                >
-                  {category}
-                </span>
-              ))}
-            </div>
-          </div>
+          {/* Categories section supprimée (non fonctionnelle) */}
         </div>
       </section>
 
