@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BLOG_POSTS } from '@/lib/blog-data';
 import { SITE_CONFIG } from '@/lib/constants';
 import type { Article as OutrankArticle } from '@/lib/storage-upstash';
@@ -114,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             </section>
             {item.image_url && (
               <div className="container-custom -mt-10">
-                <img src={item.image_url} alt={item.title} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
+                <Image src={item.image_url} alt={item.title} width={1280} height={640} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
               </div>
             )}
 
@@ -187,9 +188,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         </div>
       </section>
       {/** Couverture statique si disponible */}
-      {(post as any).featuredImage && (
+      {post.featuredImage && (
         <div className="container-custom -mt-10">
-          <img src={(post as any).featuredImage} alt={post.title} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
+          <Image src={post.featuredImage} alt={post.title} width={1280} height={640} className="w-full max-w-4xl mx-auto rounded-xl shadow object-cover h-64 md:h-80" />
         </div>
       )}
       <section className="section-padding">

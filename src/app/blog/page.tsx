@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
 import { BLOG_POSTS, FEATURED_POSTS, BLOG_CATEGORIES } from '@/lib/blog-data';
@@ -48,7 +49,7 @@ export default async function BlogPage() {
       date: new Date(p.publishedAt).toISOString(),
       href: `/blog/${p.id}`,
       tag: p.category,
-      imageUrl: (p as any).featuredImage || undefined,
+      imageUrl: p.featuredImage,
       source: 'editorial' as const,
     })),
   ]
@@ -139,7 +140,7 @@ export default async function BlogPage() {
                   <article key={post.id} className="card group h-full flex flex-col overflow-hidden">
                     {post.imageUrl && (
                       <Link href={post.href} className="block -mx-6 -mt-6 mb-4">
-                        <img src={post.imageUrl} alt={post.title} className="w-full h-44 object-cover md:h-48 lg:h-40" />
+                        <Image src={post.imageUrl} alt={post.title} width={800} height={320} className="w-full h-44 object-cover md:h-48 lg:h-40" />
                       </Link>
                     )}
                     <div className="flex items-start justify-between mb-3">

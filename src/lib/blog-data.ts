@@ -9,6 +9,7 @@ export interface BlogPost {
   category: string;
   tags: string[];
   featured: boolean;
+  featuredImage?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
