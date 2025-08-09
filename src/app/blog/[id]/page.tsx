@@ -6,47 +6,11 @@ import { BLOG_POSTS } from '@/lib/blog-data';
 import { SITE_CONFIG } from '@/lib/constants';
 import type { Article as OutrankArticle } from '@/lib/storage-upstash';
 
-// Utilitaires: génère des ancres pour h2/h3 et construit un sommaire
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/&.+?;/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-}
-
-function buildTocAndInjectIds(html: string): { html: string; toc: { id: string; text: string; level: 2 | 3 | 4 }[] } {
-  const ids = new Map<string, number>();
-  const toc: { id: string; text: string; level: 2 | 3 | 4 }[] = [];
-  const result = html.replace(/<h(2|3|4)([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, levelStr, attrs, inner) => {
-    const level = Number(levelStr) as 2 | 3 | 4;
-    const text = inner.replace(/<[^>]*>/g, '').trim();
-    let id = slugify(text || 'section');
-    const count = ids.get(id) || 0;
-    ids.set(id, count + 1);
-    if (count > 0) id = `${id}-${count + 1}`;
-    // Inject id uniquement s'il n'existe pas déjà
-    const hasId = /\sid=\"[^\"]+\"/i.test(attrs);
-    const newAttrs = hasId ? attrs : `${attrs} id="${id}"`;
-    toc.push({ id, text, level });
-    return `<h${level}${newAttrs}>${inner}</h${level}>`;
-  });
-  return { html: result, toc };
-}
-
-// Nettoyages spécifiques au contenu dynamique Outrank
-function sanitizeContentHtml(rawHtml: string): string {
+// Simplification KISS: retirer un éventuel premier H1 pour éviter le doublon avec le hero
+function stripFirstH1(rawHtml: string): string {
   if (!rawHtml) return '';
-  let html = rawHtml;
-  // 1) Supprimer le tout premier H1 éventuel (pour éviter le doublon avec le hero)
-  html = html.replace(/^[\s\S]*?<h1[^>]*>[\s\S]*?<\/h1>/i, (match) => {
-    // si le tout premier tag est bien un h1, on le retire; sinon, on ne change rien
-    return match.startsWith('<h1') ? '' : match;
-  });
-  // 2) Retirer un bloc Sommaire intégré au HTML (h2/h3 "Sommaire" jusqu'au prochain h2/h3/h4)
-  html = html.replace(/<h(2|3)[^>]*>\s*Sommaire\s*<\/h\1>[\s\S]*?(?=<h(2|3|4)[^>]*>|$)/i, '');
-  return html;
+  // Retire uniquement si le premier tag est un H1
+  return rawHtml.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
 }
 
 export async function generateStaticParams() {
@@ -109,8 +73,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       const item = (data?.items?.[0] ?? null) as OutrankArticle | null;
       if (item) {
         const formattedDate = new Date(item.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        const cleaned = sanitizeContentHtml(item.content_html || '');
-        const { html, toc } = buildTocAndInjectIds(cleaned);
+        const html = stripFirstH1(item.content_html || '');
         return (
           <div className="min-h-screen bg-background">
             <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white section-padding">
@@ -144,43 +107,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
             <section className="section-padding">
               <div className="container-custom">
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
-                  <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
-                    <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
-                      <div className="overflow-x-auto">
-                        <div dangerouslySetInnerHTML={{ __html: html }} />
-                      </div>
+                <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
+                  <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+                    <div className="overflow-x-auto">
+                      <div dangerouslySetInnerHTML={{ __html: html }} />
                     </div>
-                  </article>
-                  {toc.length > 3 && (
-                    <aside className="hidden lg:block sticky top-24 h-fit bg-white rounded-2xl shadow-card p-6">
-                      <h3 className="text-h3 font-semibold text-neutral-800 mb-4">Sommaire</h3>
-                      <nav>
-                        <ul className="space-y-2 text-sm">
-                          {toc.map((t) => (
-                            <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
-                              <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
-                                {t.text}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </nav>
-                      <details className="lg:hidden mt-4">
-                        <summary className="cursor-pointer text-neutral-700">Sommaire</summary>
-                        <ul className="mt-2 space-y-2 text-sm">
-                          {toc.map((t) => (
-                            <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
-                              <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
-                                {t.text}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    </aside>
-                  )}
-                </div>
+                  </div>
+                </article>
               </div>
             </section>
           </div>
@@ -226,31 +159,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       )}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
-            <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
-              <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
-                <div className="overflow-x-auto">
-                  <div dangerouslySetInnerHTML={{ __html: html }} />
-                </div>
+          <article className="bg-white rounded-2xl shadow-card p-6 md:p-10">
+            <div className="prose prose-neutral lg:prose-lg max-w-none prose-headings:text-neutral-900 prose-a:text-primary hover:prose-a:text-primary-700 prose-img:rounded-xl prose-img:shadow lg:prose-h2:mt-10 lg:prose-h3:mt-8 prose-p:text-neutral-700 prose-li:text-neutral-700">
+              <div className="overflow-x-auto">
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
               </div>
-            </article>
-            {toc.length > 3 && (
-              <aside className="hidden lg:block sticky top-24 h-fit bg-white rounded-2xl shadow-card p-6">
-                <h3 className="text-h3 font-semibold text-neutral-800 mb-4">Sommaire</h3>
-                <nav>
-                  <ul className="space-y-2 text-sm">
-                    {toc.map((t) => (
-                      <li key={t.id} className={t.level === 3 ? 'pl-3 border-l-2 border-neutral-200' : ''}>
-                        <a href={`#${t.id}`} className="text-neutral-700 hover:text-primary">
-                          {t.text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              </aside>
-            )}
-          </div>
+            </div>
+          </article>
         </div>
       </section>
     </div>
