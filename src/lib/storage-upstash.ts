@@ -68,17 +68,10 @@ export async function getArticleBySlug(slug: string): Promise<StoredArticle | nu
 
 export async function getAllArticles(): Promise<StoredArticle[]> {
   const redis = getRedis();
-  const slugs = await redis.smembers<string>(ARTICLES_INDEX_KEY);
+  const slugs = (await redis.smembers(ARTICLES_INDEX_KEY)) as string[];
   if (!slugs || slugs.length === 0) return [];
-  // Upstash Redis n'a pas MGET via pipeline typée, on simule
-  const pipeline = redis.pipeline();
-  for (const s of slugs) pipeline.get<StoredArticle | null>(articleKey(s));
-  const results = await pipeline.exec<StoredArticle | null[]>();
-  const articles: StoredArticle[] = [];
-  for (const res of results) {
-    const [, value] = res as unknown as [unknown, StoredArticle | null];
-    if (value) articles.push(value);
-  }
+  const fetched = await Promise.all(slugs.map((s) => redis.get<StoredArticle | null>(articleKey(s))));
+  const articles: StoredArticle[] = fetched.filter((v): v is StoredArticle => Boolean(v));
   // Tri par date desc
   articles.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   return articles;
