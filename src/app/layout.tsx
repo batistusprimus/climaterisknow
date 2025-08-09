@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -85,12 +86,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProduction = process.env.NODE_ENV === "production";
   return (
     <html lang={SITE_CONFIG.language} className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} antialiased no-scroll-x`}
         suppressHydrationWarning
       >
+        {isProduction && (
+          <>
+            <Script
+              id="gtag-src"
+              src="https://www.googletagmanager.com/gtag/js?id=G-6KV91JDFL8"
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-6KV91JDFL8');
+              `}
+            </Script>
+          </>
+        )}
         <div className="min-h-screen flex flex-col safe-area">
           <Header />
           <main className="flex-1 pt-20 safe-area">
