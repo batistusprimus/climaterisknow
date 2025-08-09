@@ -48,6 +48,9 @@ body {
 .prose {
   max-width: none;
 }
+.prose * {
+  max-width: 100%; /* empêche tout dépassement horizontal dans le contenu riche */
+}
 .prose h2, .prose h3 {
   scroll-margin-top: 6rem;
 }
@@ -63,6 +66,10 @@ body {
   overflow-x: auto;
   white-space: nowrap;
   border-collapse: collapse;
+}
+.prose pre, .prose code {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 .prose th, .prose td {
   border: 1px solid #E2E8F0; /* neutral-200 */

@@ -140,7 +140,15 @@ export default async function BlogPage() {
                   <article key={post.id} className="card group h-full flex flex-col overflow-hidden">
                     {post.imageUrl && (
                       <Link href={post.href} className="block -mx-6 -mt-6 mb-4">
-                        <Image src={post.imageUrl} alt={post.title} width={800} height={320} className="w-full h-44 object-cover md:h-48 lg:h-40" />
+                        <Image
+                          src={post.imageUrl}
+                          alt={post.title}
+                          width={800}
+                          height={320}
+                          unoptimized
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                          className="w-full h-44 object-cover md:h-48 lg:h-40"
+                        />
                       </Link>
                     )}
                     <div className="flex items-start justify-between mb-3">
