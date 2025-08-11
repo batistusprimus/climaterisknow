@@ -49,7 +49,7 @@ export const FOOTER_NAVIGATION = {
 export const SITE_CONFIG = {
   name: 'Sentinel Shield',
   domain: 'climaterisknow.com',
-  url: 'https://climaterisknow.com',
+  url: 'https://www.climaterisknow.com',
   description: COMPANY_INFO.tagline,
   keywords: [
     'weather risk assessment',

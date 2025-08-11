@@ -5,8 +5,9 @@ import { BLOG_POSTS } from '@/lib/blog-data';
 export const revalidate = 60; // revalidate sitemap every 60s
 
 function absoluteUrl(path: string): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url;
-  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url).replace(/\/$/, '');
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${normalizedPath}`;
 }
 
 async function fetchOutrankSlugs(): Promise<string[]> {
