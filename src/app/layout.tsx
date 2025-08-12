@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import RootShell from "@/components/layout/RootShell";
 import { SITE_CONFIG } from "@/lib/constants";
 import "./globals.css";
 
@@ -111,13 +110,7 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        <div className="min-h-screen flex flex-col safe-area">
-          <Header />
-          <main className="flex-1 pt-20 safe-area">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <RootShell>{children}</RootShell>
       </body>
     </html>
   );
