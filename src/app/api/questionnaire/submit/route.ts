@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveLeadSubmission, type LeadSubmissionRecord } from '@/lib/leads-storage';
+import { triggerIntegrations } from '@/lib/integrations';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,10 @@ export async function POST(req: NextRequest) {
     }
 
     await saveLeadSubmission(body);
+    // Fire-and-forget vers intégrations externes
+    triggerIntegrations(body).catch((err) => {
+      console.error('Integrations error', err);
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
