@@ -616,7 +616,7 @@ function MultiEditor({ step, value, onChange }: { step: MultiStep; value: string
 function ZipListEditor({ step, value, onChange }: { step: ZipListStep; value: string[]; onChange: (v: string[]) => void }) {
   const [items, setItems] = useState<string[]>(() => {
     const arr = Array.isArray(value) ? value : [];
-    const minItems = step.maxItems || 5;
+    const minItems = step.fields || 5;
     while (arr.length < minItems) arr.push('');
     return arr;
   });
@@ -624,10 +624,10 @@ function ZipListEditor({ step, value, onChange }: { step: ZipListStep; value: st
   // Sync with parent value
   useEffect(() => {
     const arr = Array.isArray(value) ? value : [];
-    const minItems = step.maxItems || 5;
+    const minItems = step.fields || 5;
     while (arr.length < minItems) arr.push('');
     setItems(arr);
-  }, [value, step.maxItems]);
+  }, [value, step.fields]);
 
   useEffect(() => {
     onChange(items);
