@@ -3,6 +3,7 @@ export type QuestionType = 'single' | 'multi' | 'input' | 'ziplist' | 'number' |
 export type QuestionOption = {
   id: string;
   label: string;
+  description?: string;
   value?: string | number | boolean;
   weight?: number;
 };
