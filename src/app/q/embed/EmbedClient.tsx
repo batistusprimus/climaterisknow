@@ -8,21 +8,19 @@ export default function EmbedClient() {
     // Auto-height functionality for iframe embedding
     const resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
-        const height = entry.contentRect.height;
+        const height = Math.ceil(entry.contentRect.height);
         // Envoyer la hauteur au parent (la page de capture)
         if (window.parent !== window) {
           window.parent.postMessage({
             type: 'sentinel:q:height',
-            height: height + 20 // Ajouter un peu de marge
+            height: height + 16 // petite marge
           }, window.location.origin);
         }
       }
     });
 
     // Observer le body de la page
-    if (document.body) {
-      resizeObserver.observe(document.body);
-    }
+    if (document.body) resizeObserver.observe(document.body);
 
     return () => {
       resizeObserver.disconnect();

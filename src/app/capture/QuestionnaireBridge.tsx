@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 
 export default function QuestionnaireBridge() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const lastHeightRef = useRef<number>(600);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -12,8 +13,12 @@ export default function QuestionnaireBridge() {
       
       // Écouter les messages de redimensionnement du questionnaire
       if (event.data?.type === 'sentinel:q:height' && iframeRef.current) {
-        const height = event.data.height;
-        iframeRef.current.style.height = `${Math.max(height, 600)}px`;
+        const height = Math.max(Number(event.data.height) || 0, 600);
+        // Ne pas animer / ignorer les micro-variations pour éviter l'effet "ça descend tout seul"
+        if (Math.abs(height - lastHeightRef.current) >= 8) {
+          lastHeightRef.current = height;
+          iframeRef.current.style.height = `${height}px`;
+        }
       }
     };
 
@@ -25,7 +30,7 @@ export default function QuestionnaireBridge() {
     <iframe 
       ref={iframeRef}
       src="/q/embed?utm_source=capture_page"
-      className="w-full border-0 transition-all duration-300"
+      className="w-full border-0 block"
       style={{ minHeight: '600px', height: '600px' }}
       title="Climate Risk Assessment Questionnaire"
     />
