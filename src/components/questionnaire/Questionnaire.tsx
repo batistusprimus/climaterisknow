@@ -62,7 +62,7 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
     localStorage.setItem(storageKey, JSON.stringify(state));
   }, [answers, currentStepId, history, schema.id, schema.version]);
 
-  const setAnswer = useCallback((stepId: string, value: any) => {
+  const setAnswer = useCallback((stepId: string, value: unknown) => {
     setAnswers(prev => {
       const existing = prev.findIndex(a => a.stepId === stepId);
       if (existing >= 0) {
@@ -132,7 +132,7 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
   }, [answers, currentStep]);
 
   const buildSnapshotWithCurrentInput = (): AnswerRecord[] => {
-    let snapshot = [...answers];
+    const snapshot: AnswerRecord[] = [...answers];
     
     if (currentStep?.kind === 'input') {
       const root = containerRef.current;

@@ -33,15 +33,15 @@ function getLeadsRedis(): Redis {
     process.env.UPSTASH_REDIS_REST_URL ||
     process.env.KV_REST_API_URL ||
     // compat manuel (lowercase fournies par l'utilisateur)
-    (process.env as any).leads_KV_REST_API_URL ||
-    (process.env as any).leads_REDIS_URL;
+    (process.env as unknown as Record<string, string | undefined>).leads_KV_REST_API_URL ||
+    (process.env as unknown as Record<string, string | undefined>).leads_REDIS_URL;
 
   const token =
     process.env.LEADS_UPSTASH_REDIS_REST_TOKEN ||
     process.env.LEADS_KV_REST_API_TOKEN ||
     process.env.UPSTASH_REDIS_REST_TOKEN ||
     process.env.KV_REST_API_TOKEN ||
-    (process.env as any).leads_KV_REST_API_TOKEN;
+    (process.env as unknown as Record<string, string | undefined>).leads_KV_REST_API_TOKEN;
 
   if (!url || !token) {
     throw new Error(
