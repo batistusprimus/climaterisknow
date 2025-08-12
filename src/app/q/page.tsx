@@ -10,11 +10,10 @@ export default async function QEmbedPage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
-  const variant = (sp?.variant as string) || 'default';
   const tunnelId = (sp?.tunnel as string) || 'capture';
   return (
     <div className="p-4">
-      <EmbedClient variant={variant} tunnelId={tunnelId} />
+      <EmbedClient tunnelId={tunnelId} />
     </div>
   );
 }

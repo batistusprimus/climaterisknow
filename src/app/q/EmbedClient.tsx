@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Questionnaire from '@/components/questionnaire/Questionnaire';
 
-export default function EmbedClient({ variant, tunnelId }: { variant: string; tunnelId: string }) {
+export default function EmbedClient({ tunnelId }: { tunnelId: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function EmbedClient({ variant, tunnelId }: { variant: string; tu
 
   return (
     <div ref={containerRef}>
-      <Questionnaire variant={variant} tunnelId={tunnelId} />
+      <Questionnaire tunnelId={tunnelId} />
     </div>
   );
 }
