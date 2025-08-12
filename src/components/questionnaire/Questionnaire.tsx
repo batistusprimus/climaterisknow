@@ -151,7 +151,7 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
       }
     }
     
-    if (isZipList(currentStep)) {
+    if (currentStep && isZipList(currentStep)) {
       const root = containerRef.current;
       const inputs = Array.from(root?.querySelectorAll('input') || []);
       if (inputs.length > 0) {
