@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Questionnaire from '@/components/questionnaire/Questionnaire';
 
 export default function EmbedClient() {
+  const lastSentRef = useRef<number>(0);
   useEffect(() => {
     // Auto-height functionality for iframe embedding
     const resizeObserver = new ResizeObserver(entries => {
@@ -11,10 +12,13 @@ export default function EmbedClient() {
         const height = Math.ceil(entry.contentRect.height);
         // Envoyer la hauteur au parent (la page de capture)
         if (window.parent !== window) {
-          window.parent.postMessage({
-            type: 'sentinel:q:height',
-            height: height + 16 // petite marge
-          }, window.location.origin);
+          if (Math.abs(height - lastSentRef.current) >= 2) {
+            lastSentRef.current = height;
+            window.parent.postMessage({
+              type: 'sentinel:q:height',
+              height
+            }, window.location.origin);
+          }
         }
       }
     });
