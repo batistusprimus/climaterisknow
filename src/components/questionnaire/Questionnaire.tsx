@@ -191,6 +191,7 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
             userAgent: navigator.userAgent,
             utm: snap.find(a => a.stepId === '__utm__')?.value || {},
           },
+          completedAt: new Date().toISOString(),
         };
         const res = await fetch('/api/questionnaire/submit', {
           method: 'POST',
@@ -207,6 +208,29 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
         setSubmitting(false);
       }
       return;
+    }
+    // If the next step is thank_you, auto-submit before navigating
+    if (nextId === 'thank_you') {
+      try {
+        const payload = {
+          sessionId: sessionIdRef.current,
+          tunnelId,
+          answers: snap,
+          metadata: {
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            utm: snap.find(a => a.stepId === '__utm__')?.value || {},
+          },
+          completedAt: new Date().toISOString(),
+        };
+        // Fire-and-forget; we n'attend pas avant de naviguer vers thank_you
+        fetch('/api/questionnaire/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }).catch(() => {});
+        localStorage.removeItem(`q:${schema.id}:v:${schema.version}:state`);
+      } catch {}
     }
     setHistory(prev => [...prev, currentStepId]);
     setCurrentStepId(nextId);
