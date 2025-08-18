@@ -48,17 +48,18 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
     `https://rest.gohighlevel.com/v1/customFields`,
   ];
 
-  let list: Array<Record<string, unknown>> = [];
+  type UnknownRecord = Record<string, unknown>;
+  let list: Array<UnknownRecord> = [];
   for (const url of candidates) {
     try {
       const res = await fetch(url, { method: 'GET', headers });
       const ct = res.headers.get('content-type') || '';
       if (!res.ok || !ct.includes('application/json')) continue;
       const json: unknown = await res.json();
-      const maybeArr = (json as { data?: unknown; customFields?: unknown } | unknown[]);
-      const arr = (Array.isArray(maybeArr)
-        ? maybeArr
-        : (Array.isArray(maybeArr?.data as unknown[]) ? (maybeArr.data as unknown[]) : (Array.isArray(maybeArr?.customFields as unknown[]) ? (maybeArr.customFields as unknown[]) : [])));
+      const obj = json as UnknownRecord | UnknownRecord[];
+      const arr = Array.isArray(obj)
+        ? obj
+        : (Array.isArray(obj?.data as unknown[]) ? (obj.data as unknown[]) : (Array.isArray(obj?.customFields as unknown[]) ? (obj.customFields as unknown[]) : []));
       if (Array.isArray(arr) && arr.length) {
         list = arr;
         console.log('[GHL] Discovered custom fields from', url, 'count:', arr.length);
@@ -69,10 +70,23 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
 
   const byNameLc = new Map<string, string>();
   for (const f of list) {
-    const id = (f as any)?.id ?? (f as any)?._id ?? (f as any)?.value; // fallback typé souple
-    const name = (f as any)?.name ?? (f as any)?.fieldName ?? (f as any)?.key ?? (f as any)?.fieldKey;
-    if (!id || !name) continue;
-    byNameLc.set(normalizeFieldName(name), String(id));
+    const idCandidateKeys = ['id','_id','value'] as const;
+    const nameCandidateKeys = ['name','fieldName','key','fieldKey'] as const;
+
+    let idStr: string | undefined;
+    for (const k of idCandidateKeys) {
+      const v = f[k];
+      if (typeof v === 'string' && v.trim()) { idStr = v; break; }
+    }
+
+    let nameStr: string | undefined;
+    for (const k of nameCandidateKeys) {
+      const v = f[k];
+      if (typeof v === 'string' && v.trim()) { nameStr = v; break; }
+    }
+
+    if (!idStr || !nameStr) continue;
+    byNameLc.set(normalizeFieldName(nameStr), idStr);
   }
 
   ghlCustomFieldsCache = { byNameLc, loadedAt: Date.now() };
@@ -256,8 +270,8 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
 }
 
 async function sendToPickaxe(payload: NormalizedLead): Promise<void> {
-  const webhookUrl = process.env.PICKAXE_WEBHOOK_URL;
-  const webhookToken = process.env.PICKAXE_WEBHOOK_TOKEN;
+  const webhookUrl = process.env.PICKAXE_WEBHOOK_URL; // unused (Pickaxe désactivé)
+  const webhookToken = process.env.PICKAXE_WEBHOOK_TOKEN; // unused
   const apiKey = process.env.PICKAXE_API_KEY;
   const toolId = process.env.PICKAXE_TOOL_ID;
 
