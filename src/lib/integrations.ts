@@ -63,12 +63,17 @@ async function withRetry<T>(fn: () => Promise<T>, label: string): Promise<void> 
   const delays = [0, 1000, 3000];
   for (let i = 0; i < delays.length; i++) {
     try {
-      if (delays[i]) await new Promise(r => setTimeout(r, delays[i]));
+      if (delays[i]) {
+        console.log(`[integrations] ${label} retry ${i + 1} after ${delays[i]}ms`);
+        await new Promise(r => setTimeout(r, delays[i]));
+      }
       await fn();
+      console.log(`[integrations] ${label} succeeded on attempt ${i + 1}`);
       return;
     } catch (err) {
+      console.error(`[integrations] ${label} attempt ${i + 1} failed:`, err);
       if (i === delays.length - 1) {
-        console.error(`[integrations] ${label} failed`, err);
+        console.error(`[integrations] ${label} FINAL FAILURE after ${delays.length} attempts:`, err);
       }
     }
   }
