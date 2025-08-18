@@ -217,11 +217,24 @@ async function sendToPickaxe(payload: NormalizedLead): Promise<void> {
 
 export async function triggerIntegrations(submission: LeadSubmissionRecord): Promise<void> {
   const normalized = normalizeLead(submission);
+  
+  console.log('[INTEGRATIONS] Starting integrations for session:', normalized.sessionId);
+  
   // Run in parallel with retry; do not throw to caller
-  await Promise.allSettled([
+  const results = await Promise.allSettled([
     withRetry(() => sendToGHL(normalized), 'ghl'),
     withRetry(() => sendToPickaxe(normalized), 'pickaxe'),
   ]);
+  
+  // Log les résultats pour debug
+  results.forEach((result, index) => {
+    const integration = index === 0 ? 'GHL' : 'Pickaxe';
+    if (result.status === 'rejected') {
+      console.error(`[INTEGRATIONS] ${integration} FAILED:`, result.reason);
+    } else {
+      console.log(`[INTEGRATIONS] ${integration} succeeded`);
+    }
+  });
 }
 
 
