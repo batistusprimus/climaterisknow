@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import CookieSettings from '@/components/ui/CookieSettings';
 import { 
   COMPANY_INFO, 
@@ -22,9 +23,11 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-6">
               <div className="flex items-center justify-center w-12 h-12">
-                <img 
+                <Image 
                   src="/Logo_Sentinel_Climate_Intelligence_Transparent.png" 
                   alt="Sentinel Shield Logo"
+                  width={48}
+                  height={48}
                   className="w-full h-full object-contain brightness-0 invert"
                 />
               </div>

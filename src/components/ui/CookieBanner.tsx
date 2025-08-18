@@ -168,7 +168,7 @@ export default function CookieBanner() {
               <Button
                 onClick={() => setShowPreferences(true)}
                 variant="outline"
-                size="xs"
+                size="sm"
                 className="flex-1 text-xs"
               >
                 Settings
@@ -176,7 +176,7 @@ export default function CookieBanner() {
               <Button
                 onClick={handleAcceptAll}
                 variant="primary"
-                size="xs"
+                size="sm"
                 className="flex-1 text-xs"
               >
                 Accept All
@@ -278,7 +278,7 @@ export default function CookieBanner() {
               <Button
                 onClick={handleRejectAll}
                 variant="outline"
-                size="xs"
+                size="sm"
                 className="flex-1 text-xs"
               >
                 Reject All
@@ -286,7 +286,7 @@ export default function CookieBanner() {
               <Button
                 onClick={handleAcceptSelected}
                 variant="primary"
-                size="xs"
+                size="sm"
                 className="flex-1 text-xs"
               >
                 Save
