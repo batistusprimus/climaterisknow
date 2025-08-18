@@ -19,6 +19,62 @@ export type NormalizedLead = {
   zipcodes?: string[];
 };
 
+// Cache des custom fields GHL (id par name/fieldKey normalisés)
+let ghlCustomFieldsCache: {
+  byNameLc: Map<string, string>;
+  loadedAt: number;
+} | null = null;
+
+function normalizeFieldName(name: unknown): string {
+  return String(name || '')
+    .trim()
+    .toLowerCase();
+}
+
+async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise<void> {
+  if (ghlCustomFieldsCache && Date.now() - ghlCustomFieldsCache.loadedAt < 10 * 60 * 1000) return;
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+    Version: '2021-07-28',
+    LocationId: locationId,
+  };
+
+  const candidates = [
+    `https://services.leadconnectorhq.com/v2/locations/${locationId}/custom-fields`,
+    `https://services.leadconnectorhq.com/v1/locations/${locationId}/customFields`,
+    `https://services.leadconnectorhq.com/contacts/customFields`,
+    `https://rest.gohighlevel.com/v1/customFields`,
+  ];
+
+  let list: Array<any> = [];
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { method: 'GET', headers });
+      const ct = res.headers.get('content-type') || '';
+      if (!res.ok || !ct.includes('application/json')) continue;
+      const json = (await res.json()) as any;
+      const arr = json?.data || json?.customFields || (Array.isArray(json) ? json : []);
+      if (Array.isArray(arr) && arr.length) {
+        list = arr;
+        console.log('[GHL] Discovered custom fields from', url, 'count:', arr.length);
+        break;
+      }
+    } catch {}
+  }
+
+  const byNameLc = new Map<string, string>();
+  for (const f of list) {
+    const id = f?.id ?? f?._id ?? f?.value; // différents schémas possibles
+    const name = f?.name ?? f?.fieldName ?? f?.key ?? f?.fieldKey;
+    if (!id || !name) continue;
+    byNameLc.set(normalizeFieldName(name), String(id));
+  }
+
+  ghlCustomFieldsCache = { byNameLc, loadedAt: Date.now() };
+}
+
 function extractValue(answers: LeadSubmissionRecord['answers'], stepId: string): unknown {
   return answers.find(a => a.stepId === stepId)?.value;
 }
@@ -108,16 +164,37 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
 
   // Réactivation: envoi de toutes les réponses comme custom fields GHL
-  // GHL capitalise la première lettre des keys côté UI; on fait de même sur l'id envoyé
-  function capitalizeFirstLetter(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+  // 1) On récupère la liste réelle des champs (leurs IDs) et on mappe par nom
+  await fetchGhlCustomFields(apiKey, locationId);
+  const byNameLc = ghlCustomFieldsCache?.byNameLc || new Map<string, string>();
+
   for (const [stepId, value] of Object.entries(payload.answers)) {
     if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) continue;
+
     let formatted = '';
     if (Array.isArray(value)) formatted = value.map(v => String(v)).join(', ');
     else if (value != null) formatted = String(value);
-    if (formatted.trim()) customFields.push({ id: capitalizeFirstLetter(stepId), value: formatted });
+    if (!formatted.trim()) continue;
+
+    // On teste plusieurs clés possibles pour matcher le champ GHL:
+    const candidates = [
+      stepId,                       // ex: ma_zipcodes
+      stepId.replace(/_/g, ' '),    // ma zipcodes
+      stepId.replace(/\b\w/g, c => c.toUpperCase()), // Ma_Zipcodes (camel titre)
+    ].map(normalizeFieldName);
+
+    let matchedId: string | undefined;
+    for (const key of candidates) {
+      const id = byNameLc.get(key);
+      if (id) { matchedId = id; break; }
+    }
+
+    if (!matchedId) {
+      console.log('[GHL] Custom field not found for stepId:', stepId);
+      continue;
+    }
+
+    customFields.push({ id: matchedId, value: formatted });
   }
 
   const body = {

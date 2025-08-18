@@ -260,9 +260,16 @@ export default function Questionnaire({ tunnelId = 'default', schemaId, embedMod
 
   if (!currentStep) return <div>Step not found: {currentStepId}</div>;
 
+  // Calcule le total d'étapes à afficher dans la barre de progression.
+  // - Pour le schéma manufacturing dédié (flux linéaire), on compte les steps du schéma
+  //   en excluant la page "thank_you" (où la barre n'est pas affichée).
+  // - Pour le schéma complet avec branchements, on conserve le mapping par industrie.
+  const isManufacturingSchema = schema.id === 'manufacturing-lead-capture' || schemaId === 'manufacturing';
   const industryAnswer = answers.find(a => a.stepId === 'primary_industry')?.value as string;
   const branchKey = industryAnswer ? `ind_${industryAnswer.toLowerCase().replace(/[^a-z]/g, '_')}` : 'default';
-  const total = totalByBranch[branchKey] || totalByBranch.default;
+  const total = isManufacturingSchema
+    ? schema.steps.filter(s => s.id !== 'thank_you').length
+    : (totalByBranch[branchKey] || totalByBranch.default);
   const currentIndex = history.length + 1;
 
   const isThankYouPage = currentStep.id === 'thank_you';
