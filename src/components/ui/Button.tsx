@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { ButtonProps } from '@/types';
-import { cn } from '@/lib/utils';
 
 const Button: React.FC<ButtonProps> = ({
   children,

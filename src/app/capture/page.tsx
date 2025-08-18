@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { COMPANY_INFO, TALLY_FORM_CONFIG, SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
+import { SITE_CONFIG } from '@/lib/constants';
 import QuestionnaireBridge from './QuestionnaireBridge';
 
 export const metadata: Metadata = {

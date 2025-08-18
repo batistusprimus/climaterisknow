@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Button from '@/components/ui/Button';
 import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
-import { RESOURCES, FEATURED_RESOURCES, RESOURCE_CATEGORIES, RESOURCE_TYPES, INDUSTRY_RESOURCES } from '@/lib/resources-data';
+import { RESOURCES, FEATURED_RESOURCES, RESOURCE_TYPES, INDUSTRY_RESOURCES } from '@/lib/resources-data';
 
 export const metadata: Metadata = {
   title: 'Resources',

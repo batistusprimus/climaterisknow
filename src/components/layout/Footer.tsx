@@ -2,13 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Button from '@/components/ui/Button';
 import CookieSettings from '@/components/ui/CookieSettings';
 import { 
   COMPANY_INFO, 
   FOOTER_NAVIGATION, 
-  CONTACT_INFO, 
-  CTA_BUTTONS 
+  CONTACT_INFO
 } from '@/lib/constants';
 
 const Footer: React.FC = () => {

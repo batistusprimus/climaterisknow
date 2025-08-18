@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import { SITE_CONFIG, CTA_BUTTONS } from '@/lib/constants';
-import { BLOG_POSTS, FEATURED_POSTS, BLOG_CATEGORIES } from '@/lib/blog-data';
+import { BLOG_POSTS, FEATURED_POSTS } from '@/lib/blog-data';
 import type { Article as OutrankArticle } from '@/lib/storage-upstash';
 
 export const metadata: Metadata = {

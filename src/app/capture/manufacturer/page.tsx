@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { COMPANY_INFO, SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
+import { SITE_CONFIG } from '@/lib/constants';
 import ManufacturingQuestionnaireBridge from './ManufacturingQuestionnaireBridge';
 
 export const metadata: Metadata = {

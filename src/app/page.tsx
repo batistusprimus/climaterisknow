@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import { 
-  COMPANY_INFO, 
   CTA_BUTTONS, 
   WEATHER_RISK_CATEGORIES
 } from '@/lib/constants';

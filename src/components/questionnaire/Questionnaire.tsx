@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { completeSchema } from '@/lib/questionnaire/complete-schema';
 import { manufacturingSchema } from '@/lib/questionnaire/manufacturing-schema';
-import type { AnswerRecord, InputStep, MultiStep, QuestionStep, SingleStep, ZipListStep, QuestionnaireSchema } from '@/lib/questionnaire/types';
+import type { AnswerRecord, InputStep, MultiStep, QuestionStep, SingleStep, ZipListStep } from '@/lib/questionnaire/types';
 import { computeNextStepId } from '@/lib/questionnaire/engine';
 import Progress from './Progress';
 
@@ -134,7 +134,7 @@ export default function Questionnaire({ tunnelId = 'default', schemaId, embedMod
     return null;
   }, [answers, currentStep]);
 
-  const buildSnapshotWithCurrentInput = (): AnswerRecord[] => {
+  const buildSnapshotWithCurrentInput = useCallback((): AnswerRecord[] => {
     const snapshot: AnswerRecord[] = [...answers];
     
     if (currentStep?.kind === 'input') {
@@ -169,7 +169,7 @@ export default function Questionnaire({ tunnelId = 'default', schemaId, embedMod
     }
     
     return snapshot;
-  };
+  }, [answers, currentStep]);
 
   const goNext = useCallback(async () => {
     const snap = buildSnapshotWithCurrentInput();

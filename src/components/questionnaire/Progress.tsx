@@ -1,6 +1,6 @@
 "use client";
 
-export default function Progress({ current, total, stepTitle }: { current: number; total: number; stepTitle?: string }) {
+export default function Progress({ current, total }: { current: number; total: number; stepTitle?: string }) {
   const pct = Math.max(0, Math.min(100, Math.round((current / total) * 100)));
   
   const getStepLabel = () => {
