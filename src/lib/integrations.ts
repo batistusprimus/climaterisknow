@@ -66,7 +66,7 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
                 : []));
       if (Array.isArray(arrUnknown) && arrUnknown.length) {
         list = arrUnknown as UnknownRecord[];
-        console.log('[GHL] Discovered custom fields from', url, 'count:', arr.length);
+        console.log('[GHL] Discovered custom fields from', url, 'count:', arrUnknown.length);
         break;
       }
     } catch {}
