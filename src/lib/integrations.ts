@@ -107,34 +107,16 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   if (cfRevenue && payload.revenue) customFields.push({ id: cfRevenue, value: payload.revenue });
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
 
-  // ENVOI DE TOUTES les réponses du questionnaire comme custom fields individuels
-  // GHL capitalise automatiquement la première lettre des custom fields
-  function capitalizeFirstLetter(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
+  // TEMPORAIRE : Désactivation des custom fields pour tester la création de base
+  // Les custom fields semblent être rejetés par GHL et empêchent la création
+  console.log('[GHL] TEMP: Custom fields disabled for debugging - focusing on contact creation');
+  
+  // TODO: Réactiver une fois que nous aurons identifié le bon format des custom fields
+  /*
   for (const [stepId, value] of Object.entries(payload.answers)) {
-    // Skip les champs déjà traités dans les champs principaux
-    if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) {
-      continue;
-    }
-    
-    // Formatage de la valeur
-    let formattedValue = '';
-    if (Array.isArray(value)) {
-      formattedValue = value.join(', ');
-    } else if (value !== null && value !== undefined) {
-      formattedValue = String(value);
-    }
-    
-    // Ajout du custom field si la valeur n'est pas vide
-    if (formattedValue.trim()) {
-      customFields.push({ 
-        id: capitalizeFirstLetter(stepId), // GHL capitalise automatiquement
-        value: formattedValue 
-      });
-    }
+    // Code custom fields temporairement désactivé
   }
+  */
 
   const body = {
     email: payload.contact.email,
