@@ -141,12 +141,11 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     console.log('[GHL] Making fetch request to GHL API...');
     console.log('[GHL] Request body:', JSON.stringify(body, null, 2));
     
-    const response = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
+    const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Version': '2021-07-28',
-        'LocationId': locationId,
         'Content-Type': 'application/json',
         'X-Idempotency-Key': payload.sessionId,
       },
@@ -180,18 +179,7 @@ async function sendToPickaxe(payload: NormalizedLead): Promise<void> {
   const apiKey = process.env.PICKAXE_API_KEY;
   const toolId = process.env.PICKAXE_TOOL_ID;
 
-  if (webhookUrl) {
-    await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(webhookToken ? { 'Authorization': `Bearer ${webhookToken}` } : {}),
-        'X-Idempotency-Key': payload.sessionId,
-      },
-      body: JSON.stringify(payload),
-    }).then(res => { if (!res.ok) throw new Error(`Pickaxe webhook ${res.status}`); });
-    return;
-  }
+  // Pickaxe désactivé (non requis)
 
   if (apiKey && toolId) {
     const inputs = {
