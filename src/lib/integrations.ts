@@ -77,7 +77,16 @@ async function withRetry<T>(fn: () => Promise<T>, label: string): Promise<void> 
 async function sendToGHL(payload: NormalizedLead): Promise<void> {
   const apiKey = process.env.GHL_API_KEY;
   const locationId = process.env.GHL_LOCATION_ID;
-  if (!apiKey || !locationId) return; // not configured
+  
+  console.log('[GHL] Starting integration for session:', payload.sessionId);
+  
+  if (!apiKey || !locationId) {
+    console.log('[GHL] Not configured - missing credentials:', { 
+      hasApiKey: !!apiKey, 
+      hasLocationId: !!locationId 
+    });
+    return; // not configured
+  }
 
   const cfSession = process.env.GHL_CF_SESSION_ID;
   const cfIndustry = process.env.GHL_CF_INDUSTRY;
@@ -100,6 +109,13 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     customFields,
   };
 
+  console.log('[GHL] Sending contact:', { 
+    email: body.email, 
+    name: body.firstName, 
+    company: body.companyName,
+    customFieldsCount: customFields.length 
+  });
+
   await fetch('https://rest.gohighlevel.com/v1/contacts/', {
     method: 'POST',
     headers: {
@@ -110,7 +126,14 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     },
     body: JSON.stringify(body),
   }).then(async res => {
-    if (!res.ok) throw new Error(`GHL ${res.status}`);
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('[GHL] API Error:', res.status, errorText);
+      throw new Error(`GHL ${res.status}: ${errorText}`);
+    } else {
+      const result = await res.json();
+      console.log('[GHL] Contact created successfully:', result.contact?.id);
+    }
   });
 }
 

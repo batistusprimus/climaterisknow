@@ -1,12 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      // Expose a canonical /favicon.ico without needing to duplicate the binary
-      { source: "/favicon.ico", destination: "/Logo_Sentinel_Climate_Intelligence.ico" },
-    ];
-  },
+  // Favicon is now handled by Next.js App Router file convention (src/app/favicon.ico)
 };
 
 export default nextConfig;
