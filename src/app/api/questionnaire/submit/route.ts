@@ -8,7 +8,20 @@ export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as LeadSubmissionRecord;
 
+    console.log('[SUBMIT] Received submission:', {
+      sessionId: body?.sessionId,
+      tunnelId: body?.tunnelId,
+      answersCount: body?.answers?.length,
+      hasCompanyName: body?.answers?.some(a => a.stepId === 'company_name'),
+      hasContactEmail: body?.answers?.some(a => a.stepId === 'contact_email'),
+    });
+
     if (!body?.sessionId || !body?.tunnelId || !Array.isArray(body?.answers)) {
+      console.error('[SUBMIT] Invalid request:', { 
+        hasSessionId: !!body?.sessionId,
+        hasTunnelId: !!body?.tunnelId,
+        answersIsArray: Array.isArray(body?.answers)
+      });
       return NextResponse.json({ error: 'Requête invalide' }, { status: 400 });
     }
 
@@ -18,14 +31,17 @@ export async function POST(req: NextRequest) {
     }
 
     await saveLeadSubmission(body);
+    
+    console.log('[SUBMIT] Triggering integrations for:', body.tunnelId);
+    
     // Fire-and-forget vers intégrations externes
     triggerIntegrations(body).catch((err) => {
-      console.error('Integrations error', err);
+      console.error('[SUBMIT] Integrations error for', body.tunnelId, ':', err);
     });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('Submit lead error', err);
+    console.error('[SUBMIT] Submit lead error', err);
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
   }
 }
