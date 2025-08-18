@@ -137,29 +137,39 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   
   console.log('[GHL] Custom fields being sent:', customFields.map(cf => ({ id: cf.id, value: cf.value.substring(0, 50) + '...' })));
 
-  const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Version': '2021-07-28',
-      'Content-Type': 'application/json',
-      'X-Idempotency-Key': payload.sessionId,
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    console.log('[GHL] Making fetch request to GHL API...');
+    console.log('[GHL] Request body:', JSON.stringify(body, null, 2));
+    
+    const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+        'X-Idempotency-Key': payload.sessionId,
+      },
+      body: JSON.stringify(body),
+    });
 
-  console.log('[GHL] Response status:', response.status);
-  console.log('[GHL] Response headers:', Object.fromEntries(response.headers.entries()));
+    console.log('[GHL] Response received - status:', response.status);
+    console.log('[GHL] Response headers:', Object.fromEntries(response.headers.entries()));
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('[GHL] API Error:', response.status, errorText);
-    throw new Error(`GHL ${response.status}: ${errorText}`);
-  } else {
-    const result = await response.json();
-    console.log('[GHL] Full response:', JSON.stringify(result, null, 2));
-    console.log('[GHL] Contact created successfully:', result.contact?.id);
-    console.log('[GHL] Custom fields in response:', result.contact?.customField?.length || 0);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('[GHL] API Error:', response.status, errorText);
+      throw new Error(`GHL ${response.status}: ${errorText}`);
+    } else {
+      const result = await response.json();
+      console.log('[GHL] Full response:', JSON.stringify(result, null, 2));
+      console.log('[GHL] Contact created successfully:', result.contact?.id);
+      console.log('[GHL] Custom fields in response:', result.contact?.customField?.length || 0);
+    }
+  } catch (fetchError) {
+    console.error('[GHL] FETCH EXCEPTION:', fetchError);
+    console.error('[GHL] Error type:', fetchError.constructor.name);
+    console.error('[GHL] Error message:', fetchError.message);
+    throw fetchError;
   }
 }
 
