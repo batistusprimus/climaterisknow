@@ -42,12 +42,19 @@ function extractContactKeyFromUniqueKey(uniqueKey: unknown): string | undefined 
 async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise<void> {
   if (ghlCustomFieldsCache && Date.now() - ghlCustomFieldsCache.loadedAt < 10 * 60 * 1000) return;
 
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${apiKey}`,
-    'Content-Type': 'application/json',
-    Version: '2021-07-28',
-    LocationId: locationId,
-  };
+  // Supporte un token public (PIT) pour discovery, sinon fallback API key classique
+  const discoveryToken = process.env.GHL_CF_DISCOVERY_TOKEN;
+  const headers: Record<string, string> = discoveryToken
+    ? {
+        Authorization: `Bearer ${discoveryToken}`,
+        'Content-Type': 'application/json',
+      }
+    : {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        Version: '2021-07-28',
+        LocationId: locationId,
+      };
 
   const candidates: string[] = [
     // LeadConnector services
