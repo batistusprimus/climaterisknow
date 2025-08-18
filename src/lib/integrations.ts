@@ -108,37 +108,14 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
 
   // ENVOI DE TOUTES les réponses du questionnaire comme custom fields individuels
-  // Conversion des stepId vers les IDs GHL (avec la bonne casse)
-  const stepIdToGHLId: Record<string, string> = {
-    'ma_zipcodes': 'Ma_zipcodes',
-    'ma_criticality': 'Ma_criticality',
-    'company_revenue': 'Company_revenue',
-    'ma_production_type': 'Ma_production_type',
-    'ma_input_dependencies': 'Ma_input_dependencies',
-    'ma_product_storage': 'Ma_product_storage',
-    'ma_temp_requirements': 'Ma_temp_requirements',
-    'ma_hist_disruptions': 'Ma_hist_disruptions',
-    'ma_power_reliability': 'Ma_power_reliability',
-    'ma_supply_vulnerability': 'Ma_supply_vulnerability',
-    'ma_production_flexibility': 'Ma_production_flexibility',
-    'ma_inventory_strategy': 'Ma_inventory_strategy',
-    'ma_financial_strategy': 'Ma_financial_strategy',
-    'ma_loss_exposure': 'Ma_loss_exposure',
-    'contact_role': 'Contact_role',
-    'contact_consent': 'Contact_consent',
-    'thank_you': 'Thank_you',
-  };
+  // GHL capitalise automatiquement la première lettre des custom fields
+  function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   for (const [stepId, value] of Object.entries(payload.answers)) {
     // Skip les champs déjà traités dans les champs principaux
     if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) {
-      continue;
-    }
-    
-    // Conversion vers l'ID GHL correct
-    const ghlFieldId = stepIdToGHLId[stepId];
-    if (!ghlFieldId) {
-      console.log(`[GHL] Warning: No GHL mapping for stepId: ${stepId}`);
       continue;
     }
     
@@ -153,7 +130,7 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     // Ajout du custom field si la valeur n'est pas vide
     if (formattedValue.trim()) {
       customFields.push({ 
-        id: ghlFieldId, // Utilise l'ID GHL correct avec la bonne casse
+        id: capitalizeFirstLetter(stepId), // GHL capitalise automatiquement
         value: formattedValue 
       });
     }
