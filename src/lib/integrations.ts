@@ -141,11 +141,12 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     console.log('[GHL] Making fetch request to GHL API...');
     console.log('[GHL] Request body:', JSON.stringify(body, null, 2));
     
-    const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+    const response = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Version': '2021-07-28',
+        'LocationId': locationId,
         'Content-Type': 'application/json',
         'X-Idempotency-Key': payload.sessionId,
       },
