@@ -107,29 +107,15 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   if (cfRevenue && payload.revenue) customFields.push({ id: cfRevenue, value: payload.revenue });
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
 
-  // NOUVEAU : Envoi de TOUTES les réponses du questionnaire comme custom fields
-  // Format: stepId -> valeur formatée
-  for (const [stepId, value] of Object.entries(payload.answers)) {
-    // Skip les champs déjà traités dans les champs principaux
-    if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) {
-      continue;
-    }
-    
-    // Formatage de la valeur
-    let formattedValue = '';
-    if (Array.isArray(value)) {
-      formattedValue = value.join(', ');
-    } else if (value !== null && value !== undefined) {
-      formattedValue = String(value);
-    }
-    
-    // Ajout du custom field si la valeur n'est pas vide
-    if (formattedValue.trim()) {
-      customFields.push({ 
-        id: stepId, // Utilise directement le stepId comme ID du custom field
-        value: formattedValue 
-      });
-    }
+  // SOLUTION TEMPORAIRE : Envoi de toutes les réponses dans un seul custom field JSON
+  // En attendant la création des custom fields individuels
+  const questionnaire_data = JSON.stringify(payload.answers, null, 2);
+  if (questionnaire_data && questionnaire_data !== '{}') {
+    // Utilise un custom field générique que vous devez créer dans GHL
+    customFields.push({
+      id: 'questionnaire_responses', // Custom field à créer dans GHL
+      value: questionnaire_data
+    });
   }
 
   const body = {
