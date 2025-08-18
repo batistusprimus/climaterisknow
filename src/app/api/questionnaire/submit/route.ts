@@ -34,10 +34,13 @@ export async function POST(req: NextRequest) {
     
     console.log('[SUBMIT] Triggering integrations for:', body.tunnelId);
     
-    // Fire-and-forget vers intégrations externes
-    triggerIntegrations(body).catch((err) => {
+    // IMPORTANT: on attend les intégrations pour éviter que la fonction se termine
+    // avant la fin des appels externes (sinon GHL est interrompu).
+    try {
+      await triggerIntegrations(body);
+    } catch (err) {
       console.error('[SUBMIT] Integrations error for', body.tunnelId, ':', err);
-    });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
