@@ -244,6 +244,28 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     customFields.push({ id: matchedId, value: formatted });
   }
 
+  // Toujours pousser un hub JSON complet dans `questionnaire_responses`
+  try {
+    const questionnaireJson = JSON.stringify(
+      {
+        answers: payload.answers,
+        industry: payload.industry,
+        revenue: payload.revenue,
+        zipcodes: payload.zipcodes,
+        utm: payload.utm,
+        sessionId: payload.sessionId,
+        tunnelId: payload.tunnelId,
+        completedAt: payload.completedAt,
+      },
+      null,
+      2
+    );
+
+    // Cherche l'ID via discovery; fallback: utilise la unique key "questionnaire_responses"
+    const hubId = byNameLc.get('questionnaire_responses') || 'questionnaire_responses';
+    customFields.push({ id: hubId, value: questionnaireJson });
+  } catch {}
+
   const body = {
     email: payload.contact.email,
     phone: payload.contact.phone,
