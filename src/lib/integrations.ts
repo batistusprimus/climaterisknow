@@ -167,8 +167,8 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     }
   } catch (fetchError) {
     console.error('[GHL] FETCH EXCEPTION:', fetchError);
-    console.error('[GHL] Error type:', fetchError.constructor.name);
-    console.error('[GHL] Error message:', fetchError.message);
+    console.error('[GHL] Error type:', fetchError instanceof Error ? fetchError.constructor.name : typeof fetchError);
+    console.error('[GHL] Error message:', fetchError instanceof Error ? fetchError.message : String(fetchError));
     throw fetchError;
   }
 }

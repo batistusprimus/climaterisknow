@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Endpoint de debug pour tester l'intégration GHL en production
 // Usage: GET /api/debug/ghl
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Vérification des variables d'environnement
     const apiKey = process.env.GHL_API_KEY;

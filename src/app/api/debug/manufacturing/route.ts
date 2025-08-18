@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Endpoint de debug spécifique au formulaire manufacturing
 // Usage: GET /api/debug/manufacturing
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Test avec les mêmes données que le manufacturing
     const testSubmission = {
