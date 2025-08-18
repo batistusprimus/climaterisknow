@@ -148,6 +148,8 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     company: body.companyName,
     customFieldsCount: customFields.length 
   });
+  
+  console.log('[GHL] Custom fields being sent:', customFields.map(cf => ({ id: cf.id, value: cf.value.substring(0, 50) + '...' })));
 
   await fetch('https://rest.gohighlevel.com/v1/contacts/', {
     method: 'POST',
