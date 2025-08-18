@@ -57,11 +57,15 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
       if (!res.ok || !ct.includes('application/json')) continue;
       const json: unknown = await res.json();
       const obj = json as UnknownRecord | UnknownRecord[];
-      const arr = Array.isArray(obj)
+      const arrUnknown = Array.isArray(obj)
         ? obj
-        : (Array.isArray(obj?.data as unknown[]) ? (obj.data as unknown[]) : (Array.isArray(obj?.customFields as unknown[]) ? (obj.customFields as unknown[]) : []));
-      if (Array.isArray(arr) && arr.length) {
-        list = arr;
+        : (Array.isArray((obj as UnknownRecord)?.data as unknown[])
+            ? ((obj as UnknownRecord).data as unknown[])
+            : (Array.isArray((obj as UnknownRecord)?.customFields as unknown[])
+                ? ((obj as UnknownRecord).customFields as unknown[])
+                : []));
+      if (Array.isArray(arrUnknown) && arrUnknown.length) {
+        list = arrUnknown as UnknownRecord[];
         console.log('[GHL] Discovered custom fields from', url, 'count:', arr.length);
         break;
       }
