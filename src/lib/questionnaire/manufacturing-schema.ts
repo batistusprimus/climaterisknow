@@ -3,8 +3,19 @@ import type { QuestionnaireSchema } from './types';
 export const manufacturingSchema: QuestionnaireSchema = {
   id: 'manufacturing-lead-capture',
   version: '1.0.0',
-  entryStepId: 'ma_zipcodes',
+  entryStepId: 'company_name',
   steps: [
+    // SECTION 0: Company Information (30 seconds)
+    {
+      id: 'company_name',
+      kind: 'input',
+      title: 'Company Name',
+      description: "Enter your company's legal business name",
+      required: true,
+      type: 'text',
+      placeholder: 'Company Inc.',
+      transitions: { fallbackNextStepId: 'ma_zipcodes' },
+    },
     // SECTION 1: Geographic Footprint Analysis (30 seconds)
     {
       id: 'ma_zipcodes',
