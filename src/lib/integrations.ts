@@ -137,7 +137,7 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   
   console.log('[GHL] Custom fields being sent:', customFields.map(cf => ({ id: cf.id, value: cf.value.substring(0, 50) + '...' })));
 
-  await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+  const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -146,16 +146,21 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
       'X-Idempotency-Key': payload.sessionId,
     },
     body: JSON.stringify(body),
-  }).then(async res => {
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error('[GHL] API Error:', res.status, errorText);
-      throw new Error(`GHL ${res.status}: ${errorText}`);
-    } else {
-      const result = await res.json();
-      console.log('[GHL] Contact created successfully:', result.contact?.id);
-    }
   });
+
+  console.log('[GHL] Response status:', response.status);
+  console.log('[GHL] Response headers:', Object.fromEntries(response.headers.entries()));
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('[GHL] API Error:', response.status, errorText);
+    throw new Error(`GHL ${response.status}: ${errorText}`);
+  } else {
+    const result = await response.json();
+    console.log('[GHL] Full response:', JSON.stringify(result, null, 2));
+    console.log('[GHL] Contact created successfully:', result.contact?.id);
+    console.log('[GHL] Custom fields in response:', result.contact?.customField?.length || 0);
+  }
 }
 
 async function sendToPickaxe(payload: NormalizedLead): Promise<void> {
