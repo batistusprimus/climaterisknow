@@ -100,12 +100,11 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     customFields,
   };
 
-  await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
+  await fetch('https://rest.gohighlevel.com/v1/contacts/', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Version': '2021-07-28',
-      'LocationId': locationId,
       'Content-Type': 'application/json',
       'X-Idempotency-Key': payload.sessionId,
     },

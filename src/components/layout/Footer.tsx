@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
+import CookieSettings from '@/components/ui/CookieSettings';
 import { 
   COMPANY_INFO, 
   FOOTER_NAVIGATION, 
@@ -119,6 +120,7 @@ const Footer: React.FC = () => {
                   {item.label}
                 </Link>
               ))}
+              <CookieSettings />
             </nav>
           </div>
         </div>

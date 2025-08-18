@@ -16,13 +16,19 @@ export const COMPANY_INFO: CompanyInfo = {
   ]
 };
 
-// Navigation items
+// Navigation items - restructurée pour optimiser l'espace
 export const MAIN_NAVIGATION: NavigationItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Who We Are', href: '/who-we-are' },
-  { label: 'Why We Do What We Do', href: '/why-we-do' },
+  { label: 'About', href: '/who-we-are' },
   { label: 'Resources', href: '/resources' },
   { label: 'Blog', href: '/blog' },
+];
+
+// Navigation secondaire pour dropdown "Company"
+export const COMPANY_NAVIGATION = [
+  { label: 'Who We Are', href: '/who-we-are' },
+  { label: 'Why We Do What We Do', href: '/why-we-do' },
+  { label: 'Contact', href: '/capture' },
 ];
 
 export const FOOTER_NAVIGATION = {
@@ -88,6 +94,35 @@ export const CONTACT_INFO = {
     facebook: 'https://facebook.com/sentinelshield',
   }
 };
+
+// Risk assessments par industrie
+export const QUESTIONNAIRE_NAVIGATION = [
+  { 
+    label: 'Energy & Utilities', 
+    href: '/capture/energy',
+    description: 'Protect power generation and grid reliability from weather disruptions'
+  },
+  { 
+    label: 'Petrochemical & Refining', 
+    href: '/capture/petrochemical',
+    description: 'Safeguard chemical processing and refining operations from climate risks'
+  },
+  { 
+    label: 'Logistics & Transportation', 
+    href: '/capture/logistics',
+    description: 'Secure supply chains and transportation networks against weather delays'
+  },
+  { 
+    label: 'Manufacturing', 
+    href: '/capture/manufacturer',
+    description: 'Maintain production continuity and protect manufacturing assets'
+  },
+  { 
+    label: 'Construction & Infrastructure', 
+    href: '/capture/construction',
+    description: 'Minimize project delays and protect construction investments'
+  },
+];
 
 // CTA (Call to Action) buttons
 export const CTA_BUTTONS = {

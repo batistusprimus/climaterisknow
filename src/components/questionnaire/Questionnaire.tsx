@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { completeSchema } from '@/lib/questionnaire/complete-schema';
-import type { AnswerRecord, InputStep, MultiStep, QuestionStep, SingleStep, ZipListStep } from '@/lib/questionnaire/types';
+import { manufacturingSchema } from '@/lib/questionnaire/manufacturing-schema';
+import type { AnswerRecord, InputStep, MultiStep, QuestionStep, SingleStep, ZipListStep, QuestionnaireSchema } from '@/lib/questionnaire/types';
 import { computeNextStepId } from '@/lib/questionnaire/engine';
 import Progress from './Progress';
 
@@ -12,8 +13,9 @@ interface QuestionnaireProps {
   embedMode?: boolean;
 }
 
-export default function Questionnaire({ tunnelId = 'default', embedMode = false }: QuestionnaireProps) {
-  const schema = completeSchema;
+export default function Questionnaire({ tunnelId = 'default', schemaId, embedMode = false }: QuestionnaireProps) {
+  // Sélection simple du schéma sans hooks conditionnels
+  const schema = schemaId === 'manufacturing' ? manufacturingSchema : completeSchema;
   const containerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
 
@@ -24,6 +26,7 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
   const [history, setHistory] = useState<string[]>([]);
 
   useEffect(() => {
+    
     if (!sessionIdRef.current) {
       sessionIdRef.current = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
@@ -318,7 +321,10 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
   }
 
   return (
-    <div ref={containerRef} className={embedMode ? "bg-transparent" : "min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50"}>
+    <div 
+      ref={containerRef} 
+      className={embedMode ? "bg-transparent" : "min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50"}
+    >
       <div className="relative">
         {!embedMode && (
           <div className="bg-white border-b border-gray-200 shadow-sm">
@@ -449,8 +455,8 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
                   key={currentStep.id}
                   type={currentStep.type}
                   placeholder={currentStep.placeholder}
-                  defaultValue={(answers.find(a => a.stepId === currentStep.id)?.value as string) || ''}
-                  className="w-full px-4 py-3 text-base border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white shadow-sm"
+                  value={(answers.find(a => a.stepId === currentStep.id)?.value as string) || ''}
+                  className="w-full px-4 py-3 text-base text-gray-900 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white shadow-sm"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -460,7 +466,6 @@ export default function Questionnaire({ tunnelId = 'default', embedMode = false 
                   onChange={(e) => {
                     if (currentStep.type === 'tel') {
                       const formatted = formatPhoneUS(e.target.value);
-                      e.target.value = formatted;
                       setAnswer(currentStep.id, formatted);
                     } else {
                       setAnswer(currentStep.id, e.target.value);
@@ -671,14 +676,13 @@ function ZipListEditor({ step, value, onChange }: { step: ZipListStep; value: st
       {items.map((val, i) => (
         <input
           key={i}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+          className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors bg-white"
           inputMode="numeric"
           pattern="\\d{5}"
           placeholder={`${step.labelPrefix || 'ZIP Code'} ${i + 1}${i === 0 && step.requiredMin > 0 ? ' *' : ''}`}
           value={val}
           onChange={(e) => {
             const v = e.target.value.replace(/\D/g, '').slice(0, 5);
-            e.target.value = v;
             updateItem(i, v);
           }}
           onKeyDown={(e) => {

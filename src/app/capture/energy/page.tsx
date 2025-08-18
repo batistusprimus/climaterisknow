@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
-import { COMPANY_INFO, TALLY_FORM_CONFIG, SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
-import QuestionnaireBridge from './QuestionnaireBridge';
+import { SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
+import QuestionnaireBridge from '../QuestionnaireBridge';
 
 export const metadata: Metadata = {
-  title: 'Request Weather Risk Assessment for Texas Business Operations',
-  description: 'Comprehensive weather risk assessment for Texas energy, logistics, manufacturing, agriculture, and construction operations. NOAA historical data, hurricane tracking, FEMA flood zone analysis for executives.',
-  keywords: ['Texas business weather risk assessment', 'energy logistics manufacturing weather risk', 'agriculture construction weather analysis', 'Houston Dallas Austin weather risk', 'Texas supply chain weather assessment', 'business operations weather risk'],
+  title: 'Weather Risk Assessment for Energy & Utilities Operations | Texas Climate Intelligence',
+  description: 'Specialized weather risk assessment for Texas energy and utilities operations. Protect power generation, transmission, and renewable energy assets with location-specific climate data.',
+  keywords: ['Texas energy weather risk', 'power generation climate assessment', 'utilities weather protection', 'energy infrastructure weather analysis', 'renewable energy weather vulnerability', 'power grid climate resilience'],
   openGraph: {
-    title: 'Request Weather Risk Assessment | Sentinel Shield',
-    description: 'Weather risk assessment for Texas business operations using historical data analysis.',
-    url: `${SITE_CONFIG.url}/capture`,
+    title: 'Energy & Utilities Weather Risk Assessment | Sentinel Shield',
+    description: 'Protect your energy operations with specialized weather risk analysis for Texas facilities.',
+    url: `${SITE_CONFIG.url}/capture/energy`,
   },
 };
 
-export default function CapturePage() {
+export default function EnergyCapturePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section with Integrated Form */}
@@ -25,14 +25,14 @@ export default function CapturePage() {
               <div>
                 <div className="mb-6">
                   <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-secondary/20 text-secondary-100 mb-4">
-                    🎯 FREE Weather Risk Analysis
+                    ⚡ FREE Energy Risk Analysis
                   </span>
                 </div>
                 <h1 className="text-display font-extrabold text-white mb-6 leading-tight">
-                  Protect Your Texas Operations from $200M+ Weather Losses
+                  Protect Your Energy Infrastructure from $130B+ Weather Losses
                 </h1>
                 <p className="text-h3 text-primary-100 mb-6 font-light">
-                  Get location-specific data that Texas executives use to reduce weather-related revenue losses by 40-60%
+                  Get power generation-specific data that Texas energy operators use to reduce weather-related outages by 40-60%
                 </p>
                 
                 {/* Key Benefits */}
@@ -43,7 +43,7 @@ export default function CapturePage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <span className="text-primary-100 font-medium">25+ years of NOAA historical data for your exact location</span>
+                    <span className="text-primary-100 font-medium">Grid reliability analysis for your exact power infrastructure</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -51,7 +51,7 @@ export default function CapturePage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <span className="text-primary-100 font-medium">Industry-specific risk analysis and protection strategies</span>
+                    <span className="text-primary-100 font-medium">Temperature and weather threshold analysis for equipment</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -66,7 +66,7 @@ export default function CapturePage() {
                 {/* Social Proof */}
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                   <p className="text-primary-100 text-sm">
-                    <strong>Trusted by Texas business leaders</strong> who prevented millions in weather-related losses during Hurricane Beryl (2024) and Winter Storm Mara (2024).
+                    <strong>Trusted by Texas energy leaders</strong> who maintained grid stability during Winter Storm Uri (2021) and prevented outages during Hurricane Beryl (2024).
                   </p>
                 </div>
               </div>
@@ -76,10 +76,10 @@ export default function CapturePage() {
                 <div className="bg-white rounded-2xl shadow-2xl border-2 border-white/20 overflow-hidden">
                   <div className="p-6 bg-gradient-to-r from-secondary/10 to-primary/10 border-b border-neutral-200">
                     <h2 className="text-h2 font-bold text-neutral-800 mb-3 font-secondary">
-                      Get Your FREE Weather Risk Analysis
+                      Get Your FREE Energy Risk Analysis
                     </h2>
                     <p className="text-body-regular text-neutral-600 mb-4">
-                      Complete our 3-minute assessment to receive your personalized climate vulnerability report.
+                      Complete our 3-minute assessment to receive your personalized energy infrastructure risk report.
                     </p>
                     <div className="flex items-center justify-between bg-white/60 rounded-lg p-3">
                       <div className="flex items-center space-x-2">
@@ -113,52 +113,52 @@ export default function CapturePage() {
         <div className="container-custom">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-h2 font-bold text-neutral-800 mb-6">
-              Why Texas Executives Choose Our Weather Risk Intelligence
+              Why Texas Energy Operators Choose Our Weather Risk Intelligence
             </h2>
             <p className="text-body-large text-neutral-600 mb-12 max-w-3xl mx-auto">
-              Don't let weather uncertainty drain your revenue. Get the specific data you need to protect operations and outperform competitors.
+              Don't let weather uncertainty disrupt your power generation. Get the specific data you need to maintain grid stability and outperform competitors.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
                 <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
-                  Prevent Revenue Losses
+                  Prevent Grid Failures
                 </h3>
                 <p className="text-body-regular text-neutral-600">
-                  Historical data shows companies with weather intelligence reduce weather-related losses by 40-60%. Know exactly when to protect operations.
+                  Historical data shows energy operators with weather intelligence reduce weather-related outages by 40-60%. Maintain reliable power delivery when competitors fail.
                 </p>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
+                            <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
                 <div className="w-16 h-16 bg-secondary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
-                  Competitive Advantage
+                  Infrastructure Protection
                 </h3>
                 <p className="text-body-regular text-neutral-600">
-                  While competitors shut down during weather events, you'll maintain operations and capture market share with advance planning.
+                  Protect critical generation and transmission assets with weather-specific recommendations for equipment winterization and storm preparation.
                 </p>
               </div>
               
               <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
                 <div className="w-16 h-16 bg-success/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
                 <h3 className="text-h3 font-semibold text-neutral-800 mb-3 font-secondary">
-                  Investment Justification
+                  Regulatory Compliance
                 </h3>
                 <p className="text-body-regular text-neutral-600">
-                  Build compelling business cases for protection investments with historical cost data and risk analysis specific to your location.
+                  Meet reliability standards and regulatory requirements with advance weather planning and documented risk management protocols.
                 </p>
               </div>
             </div>
@@ -172,22 +172,22 @@ export default function CapturePage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="bg-alert/10 border border-alert/30 rounded-xl p-6 mb-8">
               <h2 className="text-h2 font-bold text-alert-800 mb-3">
-                Don't Wait for the Next Weather Disaster
+                Don't Wait for the Next Power Grid Crisis
               </h2>
               <p className="text-body-large text-neutral-700">
-                Hurricane Beryl (July 2024) cost unprepared Texas businesses <strong>$2.7 billion</strong>. 
-                Companies with weather intelligence maintained operations and captured competitor market share.
+                Winter Storm Uri (2021) cost Texas energy operators <strong>$130+ billion</strong>. 
+                Utilities with weather intelligence maintained operations and avoided massive outages.
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">$195B</div>
-                <div className="text-sm text-neutral-600">Winter Storm Uri (2021) total losses</div>
+                <div className="text-3xl font-bold text-primary mb-2">$130B+</div>
+                <div className="text-sm text-neutral-600">Winter Storm Uri energy sector losses</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary mb-2">40-60%</div>
-                <div className="text-sm text-neutral-600">Revenue loss reduction with weather intelligence</div>
+                <div className="text-sm text-neutral-600">Outage reduction with weather intelligence</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary mb-2">24-48hrs</div>
@@ -203,10 +203,10 @@ export default function CapturePage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-h2 font-bold text-neutral-800 mb-4">
-              Ready to Protect Your Operations?
+              Ready to Protect Your Energy Operations?
             </h2>
             <p className="text-body-large text-neutral-600 mb-8">
-              Join the Texas executives who use weather intelligence to maintain operations and protect revenue during extreme weather events.
+              Join the Texas energy operators who use weather intelligence to maintain grid reliability and protect infrastructure during extreme weather events.
             </p>
             <div className="bg-white rounded-xl p-6 shadow-lg max-w-2xl mx-auto">
               <p className="text-body-regular text-neutral-700 mb-4">
@@ -214,14 +214,12 @@ export default function CapturePage() {
                 We do not sell insurance, provide insurance advice, or connect you with insurance providers.
               </p>
               <div className="text-sm text-neutral-500">
-                This assessment is for informational and educational purposes only to help you understand weather risks to your operations.
+                This assessment is for informational and educational purposes only to help you understand weather risks to your energy operations.
               </div>
             </div>
           </div>
         </div>
       </section>
-
-
     </div>
   );
-} 
+}

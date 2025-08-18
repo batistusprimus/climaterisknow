@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
+import CookieBanner from '@/components/ui/CookieBanner';
 
 type RootShellProps = {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export default function RootShell({ children }: RootShellProps) {
       <Header />
       <main className="flex-1 pt-20 safe-area">{children}</main>
       <Footer />
+      <CookieBanner />
     </div>
   );
 }

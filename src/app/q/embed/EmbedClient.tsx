@@ -33,7 +33,10 @@ export default function EmbedClient() {
 
   return (
     <div className="w-full">
-      <Questionnaire tunnelId="capture_page" embedMode={true} />
+      <Questionnaire 
+        tunnelId="capture_page" 
+        embedMode={true} 
+      />
     </div>
   );
 }
