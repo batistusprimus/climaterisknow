@@ -107,16 +107,18 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   if (cfRevenue && payload.revenue) customFields.push({ id: cfRevenue, value: payload.revenue });
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
 
-  // TEMPORAIRE : Désactivation des custom fields pour tester la création de base
-  // Les custom fields semblent être rejetés par GHL et empêchent la création
-  console.log('[GHL] TEMP: Custom fields disabled for debugging - focusing on contact creation');
-  
-  // TODO: Réactiver une fois que nous aurons identifié le bon format des custom fields
-  /*
-  for (const [stepId, value] of Object.entries(payload.answers)) {
-    // Code custom fields temporairement désactivé
+  // Réactivation: envoi de toutes les réponses comme custom fields GHL
+  // GHL capitalise la première lettre des keys côté UI; on fait de même sur l'id envoyé
+  function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  */
+  for (const [stepId, value] of Object.entries(payload.answers)) {
+    if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) continue;
+    let formatted = '';
+    if (Array.isArray(value)) formatted = value.map(v => String(v)).join(', ');
+    else if (value != null) formatted = String(value);
+    if (formatted.trim()) customFields.push({ id: capitalizeFirstLetter(stepId), value: formatted });
+  }
 
   const body = {
     email: payload.contact.email,
