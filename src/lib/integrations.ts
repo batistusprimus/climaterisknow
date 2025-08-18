@@ -93,16 +93,44 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     return; // not configured
   }
 
+  // Custom fields spécifiques (optionnels)
   const cfSession = process.env.GHL_CF_SESSION_ID;
   const cfIndustry = process.env.GHL_CF_INDUSTRY;
   const cfRevenue = process.env.GHL_CF_REVENUE;
   const cfZipcodes = process.env.GHL_CF_ZIPCODES;
 
   const customFields: Array<{ id: string; value: string }> = [];
+  
+  // Ajout des champs spécifiques s'ils sont configurés
   if (cfSession) customFields.push({ id: cfSession, value: payload.sessionId });
   if (cfIndustry && payload.industry) customFields.push({ id: cfIndustry, value: payload.industry });
   if (cfRevenue && payload.revenue) customFields.push({ id: cfRevenue, value: payload.revenue });
   if (cfZipcodes && payload.zipcodes?.length) customFields.push({ id: cfZipcodes, value: payload.zipcodes.join(',') });
+
+  // NOUVEAU : Envoi de TOUTES les réponses du questionnaire comme custom fields
+  // Format: stepId -> valeur formatée
+  for (const [stepId, value] of Object.entries(payload.answers)) {
+    // Skip les champs déjà traités dans les champs principaux
+    if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) {
+      continue;
+    }
+    
+    // Formatage de la valeur
+    let formattedValue = '';
+    if (Array.isArray(value)) {
+      formattedValue = value.join(', ');
+    } else if (value !== null && value !== undefined) {
+      formattedValue = String(value);
+    }
+    
+    // Ajout du custom field si la valeur n'est pas vide
+    if (formattedValue.trim()) {
+      customFields.push({ 
+        id: stepId, // Utilise directement le stepId comme ID du custom field
+        value: formattedValue 
+      });
+    }
+  }
 
   const body = {
     email: payload.contact.email,
