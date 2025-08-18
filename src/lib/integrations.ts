@@ -273,7 +273,8 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
     companyName: payload.contact.company,
     source: 'Sentinel Shield - Capture',
     tags: ['Climate Assessment', `Tunnel:${payload.tunnelId}`],
-    customFields,
+    // IMPORTANT: API REST v1 attend "customField" (singulier)
+    customField: customFields,
   };
 
   console.log('[GHL] Sending contact:', { 
