@@ -41,21 +41,24 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
     LocationId: locationId,
   };
 
-  const candidates = [
+  const candidates: string[] = [
     `https://services.leadconnectorhq.com/v2/locations/${locationId}/custom-fields`,
     `https://services.leadconnectorhq.com/v1/locations/${locationId}/customFields`,
     `https://services.leadconnectorhq.com/contacts/customFields`,
     `https://rest.gohighlevel.com/v1/customFields`,
   ];
 
-  let list: Array<any> = [];
+  let list: Array<Record<string, unknown>> = [];
   for (const url of candidates) {
     try {
       const res = await fetch(url, { method: 'GET', headers });
       const ct = res.headers.get('content-type') || '';
       if (!res.ok || !ct.includes('application/json')) continue;
-      const json = (await res.json()) as any;
-      const arr = json?.data || json?.customFields || (Array.isArray(json) ? json : []);
+      const json: unknown = await res.json();
+      const maybeArr = (json as { data?: unknown; customFields?: unknown } | unknown[]);
+      const arr = (Array.isArray(maybeArr)
+        ? maybeArr
+        : (Array.isArray(maybeArr?.data as unknown[]) ? (maybeArr.data as unknown[]) : (Array.isArray(maybeArr?.customFields as unknown[]) ? (maybeArr.customFields as unknown[]) : [])));
       if (Array.isArray(arr) && arr.length) {
         list = arr;
         console.log('[GHL] Discovered custom fields from', url, 'count:', arr.length);
@@ -66,8 +69,8 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
 
   const byNameLc = new Map<string, string>();
   for (const f of list) {
-    const id = f?.id ?? f?._id ?? f?.value; // différents schémas possibles
-    const name = f?.name ?? f?.fieldName ?? f?.key ?? f?.fieldKey;
+    const id = (f as any)?.id ?? (f as any)?._id ?? (f as any)?.value; // fallback typé souple
+    const name = (f as any)?.name ?? (f as any)?.fieldName ?? (f as any)?.key ?? (f as any)?.fieldKey;
     if (!id || !name) continue;
     byNameLc.set(normalizeFieldName(name), String(id));
   }
@@ -168,7 +171,7 @@ async function sendToGHL(payload: NormalizedLead): Promise<void> {
   await fetchGhlCustomFields(apiKey, locationId);
   const byNameLc = ghlCustomFieldsCache?.byNameLc || new Map<string, string>();
 
-  for (const [stepId, value] of Object.entries(payload.answers)) {
+  for (const [stepId, value] of Object.entries(payload.answers as Record<string, unknown>)) {
     if (['company_name', 'contact_name', 'contact_email', 'contact_phone'].includes(stepId)) continue;
 
     let formatted = '';

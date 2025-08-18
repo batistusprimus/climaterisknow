@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Endpoint de debug pour tester l'intégration GHL en production
 // Usage: GET /api/debug/ghl

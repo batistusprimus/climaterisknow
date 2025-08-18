@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Endpoint de debug spécifique au formulaire manufacturing
 // Usage: GET /api/debug/manufacturing
