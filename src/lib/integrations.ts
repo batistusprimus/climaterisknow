@@ -31,6 +31,14 @@ function normalizeFieldName(name: unknown): string {
     .toLowerCase();
 }
 
+function extractContactKeyFromUniqueKey(uniqueKey: unknown): string | undefined {
+  if (typeof uniqueKey !== 'string') return undefined;
+  // Formats possibles: "{{ contact.ma_zipcodes }}" ou "contact.ma_zipcodes"
+  const txt = uniqueKey.replace(/[{}]/g, '').trim();
+  const m = /contact\.([a-zA-Z0-9_]+)/.exec(txt);
+  return m?.[1];
+}
+
 async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise<void> {
   if (ghlCustomFieldsCache && Date.now() - ghlCustomFieldsCache.loadedAt < 10 * 60 * 1000) return;
 
@@ -42,10 +50,16 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
   };
 
   const candidates: string[] = [
+    // LeadConnector services
     `https://services.leadconnectorhq.com/v2/locations/${locationId}/custom-fields`,
     `https://services.leadconnectorhq.com/v1/locations/${locationId}/customFields`,
     `https://services.leadconnectorhq.com/contacts/customFields`,
+    // GoHighLevel REST
     `https://rest.gohighlevel.com/v1/customFields`,
+    `https://rest.gohighlevel.com/v1/locations/${locationId}/customFields`,
+    // Public API (souvent exposée dans l'UI)
+    `https://public-api.gohighlevel.com/v2/locations/${locationId}/custom-fields`,
+    `https://public-api.gohighlevel.com/v1/locations/${locationId}/customFields`,
   ];
 
   type UnknownRecord = Record<string, unknown>;
@@ -91,6 +105,11 @@ async function fetchGhlCustomFields(apiKey: string, locationId: string): Promise
 
     if (!idStr || !nameStr) continue;
     byNameLc.set(normalizeFieldName(nameStr), idStr);
+
+    // Bonus: mappe aussi via uniqueKey -> contact.<key>
+    const uniqueKeyCandidate = (f as UnknownRecord)['uniqueKey'] ?? (f as UnknownRecord)['unique_key'];
+    const contactKey = extractContactKeyFromUniqueKey(uniqueKeyCandidate);
+    if (contactKey) byNameLc.set(normalizeFieldName(contactKey), idStr);
   }
 
   ghlCustomFieldsCache = { byNameLc, loadedAt: Date.now() };
