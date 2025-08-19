@@ -65,7 +65,7 @@ export default function Header() {
         ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-200" 
         : "bg-white/90 backdrop-blur-sm"
     )}>
-      <div className="container-custom">
+      <div className="container-custom relative">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link 
@@ -261,7 +261,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-200 bg-white/95 backdrop-blur-md w-full">
+          <div className="lg:hidden absolute inset-x-0 top-20 border-t border-neutral-200 bg-white/95 backdrop-blur-md w-full max-h-[calc(100vh-80px)] overflow-y-auto overscroll-contain">
             <nav className="py-4 space-y-2">
               {MAIN_NAVIGATION.map((item) => (
                 <Link

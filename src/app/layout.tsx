@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import RootShell from "@/components/layout/RootShell";
@@ -72,6 +72,13 @@ export const metadata: Metadata = {
             // To be filled with actual verification codes
     google: "your-google-verification-code",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#F8FAFC",
 };
 
 export default function RootLayout({
